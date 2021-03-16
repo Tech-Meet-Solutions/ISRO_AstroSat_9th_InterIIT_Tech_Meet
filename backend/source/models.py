@@ -13,11 +13,12 @@ class Publication(models.Model):
 
 class Source(models.Model):
     # Cosmic Sources
-    Name = models.TextField() # Do we need CharField?
+    Name = models.CharField(max_length=100) # Do we need CharField?
     RA = models.FloatField()
     Dec = models.FloatField()
-    isObserved = models.BooleanField()
-    Publications = models.ManyToManyField(Publication)
+    #isObserved = models.BooleanField()
+    #Publications = models.ManyToManyField(Publication)
+    category = models.CharField(max_length=10,default="")
 
     def __str__(self):
         return self.Name
