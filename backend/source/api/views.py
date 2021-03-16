@@ -4,10 +4,10 @@ from rest_framework.decorators import api_view
 from django.conf import settings
 from source.models import Source
 from source.api.serializers import SourceSerializer
-MEDIA_ROOT = settings.MEDIA_ROOT
 from django.core import serializers
 from django.http.response import JsonResponse
 
+MEDIA_ROOT = settings.MEDIA_ROOT
 
 # Get Sample Info
 @api_view(['GET', ])
