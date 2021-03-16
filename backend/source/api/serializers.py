@@ -16,5 +16,4 @@ class SourceSerializer(serializers.ModelSerializer):
         fields = ('Name',
                   'RA',
                   'Dec',
-                  'isObserved',
-                  'Publications')
+                  'category')
