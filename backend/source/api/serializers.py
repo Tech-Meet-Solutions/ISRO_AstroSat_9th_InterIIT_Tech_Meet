@@ -9,7 +9,6 @@ class PublicationSerializer(serializers.ModelSerializer):
                   'URL')
 
 
-
 class SourceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Source
