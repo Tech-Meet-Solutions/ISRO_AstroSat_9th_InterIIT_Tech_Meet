@@ -16,8 +16,8 @@ class Source(models.Model):
     Name = models.CharField(max_length=100)
     RA = models.FloatField()
     Dec = models.FloatField()
-    # isObserved = models.BooleanField()
-    # Publications = models.ManyToManyField(Publication)
+    isObserved = models.BooleanField()
+    Publications = models.ManyToManyField(Publication)
     category = models.CharField(max_length=10, default="")
 
     def __str__(self):
