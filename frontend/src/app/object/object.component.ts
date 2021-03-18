@@ -17,13 +17,35 @@ export class ObjectComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private server: ServerService
-  ) { }
+  ) {
+    this.data = {
+      pk: 0,
+      Name: '',
+      RA: 0,
+      Dec: 0,
+      isObserved: false,
+      Publications: {},
+      category: ''
+    };
+  }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       this.id = params.get('id');
       console.log(this.id);
     });
+
+    this.server.get(`/api/info/${this.id}`).subscribe(
+      response => {
+        this.data = response;
+        console.log(this.data);
+        console.log("Done");
+      },
+      error => {
+        console.log(error);
+        this.router.navigateByUrl('');
+      }
+    );
 
 
   }
