@@ -1,5 +1,9 @@
 import sqlite3
 import csv
+import numpy as np
+
+def Round(a):
+	return float(np.round(float(a), 4))
 
 
 with open('dummy_data/publications.csv', 'r') as fin:
@@ -14,7 +18,7 @@ with open('dummy_data/catalog_B_dummy.csv', 'r') as fin:
 with open('dummy_data/catalog_B_dummy.csv', 'r') as fin:
 	dr = csv.DictReader(fin)
 	len_cat_B = 0
-	to_db_src_A = [(i['ID'], i['NAME'], i['RA'], i['Dec'], True, i['Desc']) for i in dr]
+	to_db_src_A = [(i['ID'], i['NAME'], Round(i['RA']), Round(i['Dec']), True, i['Desc']) for i in dr]
 
 #count number of entries in A
 with open('dummy_data/catalog_B_dummy.csv', 'r') as fin:
@@ -27,7 +31,7 @@ with open('dummy_data/catalog_B_dummy.csv', 'r') as fin:
 with open('dummy_data/catalog_A.csv', 'r') as fin:
     dr = csv.DictReader(fin)
 	
-    to_db_src_B = [( int(i['Id'])+len_cat_B, i['Name'], i['RA'], i['DE'],False, i['class']) for i in dr]
+    to_db_src_B = [( int(i['Id'])+len_cat_B, i['Name'], Round(i['RA']), Round(i['DE']),False, i['class']) for i in dr]
 
 
 con = sqlite3.connect('db.sqlite3')
