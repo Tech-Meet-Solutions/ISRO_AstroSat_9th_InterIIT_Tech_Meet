@@ -27,9 +27,15 @@ def get_source_info(request, pk):
         data = {}
         publications = []
         
-        pub_list = Source.objects.get(id=pk)
+        source = Source.objects.get(id=pk)
+        data['id'] = source.id
+        data['Name'] = source.Name
+        data['RA'] = source.RA
+        data['Dec'] = source.Dec
+        data['category'] = source.category
+        data['isObserved'] = source.isObserved
         # loop over the publications for this source 
-        for i in pub_list.Publications.all():
+        for i in source.Publications.all():
             publications.append([i.identifier,i.Name,i.URL])
         data['publications'] = publications
 
