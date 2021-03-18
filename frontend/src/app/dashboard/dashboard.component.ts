@@ -24,7 +24,6 @@ export class DashboardComponent implements OnInit {
     this.aladin = A.aladin('#aladin-lite-div', { survey: "P/DSS2/color", fov: 1.5 });
     this.server.get('/api/list/').subscribe(
       response => {
-        // console.log(response);
         this.data = response.sources;
         console.log(this.data[0]);
         this.update();
@@ -47,15 +46,22 @@ export class DashboardComponent implements OnInit {
   }
 
   update(): void {
-    var sources = [];
+    var src_obs = [];
+    var src_notobs = [];
     for (var i = 0; i < this.data.length; ++i) {
-      sources[i] = A.source(this.data[i].RA, this.data[i].Dec, this.data[i]);
+      if (this.data[i].isObserved)
+        src_obs.push(A.source(this.data[i].RA, this.data[i].Dec, this.data[i]));
+      else
+        src_notobs.push(A.source(this.data[i].RA, this.data[i].Dec, this.data[i]));
     }
-    var cat = A.catalog({shape: 'square', color: '#5d5', onClick: 'showTable', sourceSize: 16});
-    this.aladin.addCatalog(cat);
-    cat.addSources(sources);
-    console.log(cat);
-    this.aladin.gotoRaDec(this.data[0].RA, this.data[0].Dec);
+    var cat_obs = A.catalog({ shape: 'square', color: '#5d5', onClick: 'showTable', sourceSize: 16 });
+    var cat_notobs = A.catalog({ shape: 'circle', color: '#f00', onClick: 'showTable', sourceSize: 16 });
+    this.aladin.addCatalog(cat_obs);
+    this.aladin.addCatalog(cat_notobs);
+    cat_obs.addSources(src_obs);
+    cat_notobs.addSources(src_notobs);
+
+    this.aladin.gotoRaDec(0, 0);
   }
 
 }
