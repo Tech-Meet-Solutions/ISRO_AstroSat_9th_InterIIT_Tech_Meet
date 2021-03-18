@@ -5,14 +5,22 @@ from source.models import Publication, Source
 class PublicationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Publication
-        fields = ('Name',
+        fields = ('identifier',
+                  'Name',
                   'URL')
 
 
 class SourceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Source
-        fields = ('Name',
+        # fields = ('Name',
+        #          'RA',
+        #          'Dec',
+        #          'category')
+        fields = ('pk',
+                  'Name',
                   'RA',
                   'Dec',
+                  'isObserved',
+                  'Publications',
                   'category')
