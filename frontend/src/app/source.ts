@@ -4,6 +4,6 @@ export interface Source {
   RA: number;
   Dec: number;
   isObserved: boolean;
-  Publications: Array<number>;
+  Publications: any;
   category: string;
 }

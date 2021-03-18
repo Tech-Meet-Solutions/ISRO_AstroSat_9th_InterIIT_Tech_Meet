@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ObjectComponent } from './object/object.component';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 
@@ -14,7 +15,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardComponent
+    DashboardComponent,
+    ObjectComponent
   ],
   imports: [
     BrowserModule,
