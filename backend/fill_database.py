@@ -1,18 +1,38 @@
 import sqlite3
 import csv
+import numpy as np
+
+
+def Round(a):
+    return float(np.round(float(a), 4))
 
 
 with open('dummy_data/publications.csv', 'r') as fin:
     dr = csv.DictReader(fin)
     to_db_pub = [(i['ID'], i['TITLE'], i['URL']) for i in dr]
 
-with open('dummy_data/dummy_data.csv', 'r') as fin:
+with open('dummy_data/catalog_B_dummy.csv', 'r') as fin:
     dr = csv.DictReader(fin)
-    src_pub = [(i['NAME'], i['Publications']) for i in dr]
+    src_pub = [(int(i['ID']), ppr) for i in dr for ppr in i['Publications'].split(',') if ppr != '-']
 
-with open('dummy_data/dummy_data.csv', 'r') as fin:
+# To fill db with catalog B sources
+with open('dummy_data/catalog_B_dummy.csv', 'r') as fin:
     dr = csv.DictReader(fin)
-    to_db_src = [(i['NAME'], i['RA'], i['Dec'], i['isObserved'], i['Desc']) for i in dr]
+    len_cat_B = 0
+    to_db_src_A = [(i['ID'], i['NAME'], Round(i['RA']), Round(i['Dec']), True, i['Desc']) for i in dr]
+
+# count number of entries in A
+with open('dummy_data/catalog_B_dummy.csv', 'r') as fin:
+    dr = csv.DictReader(fin)
+    len_cat_B = 0
+    for i in dr:
+        len_cat_B += 1
+
+# To fill db with catalog A sources
+with open('dummy_data/catalog_A.csv', 'r') as fin:
+    dr = csv.DictReader(fin)
+
+    to_db_src_B = [(int(i['Id']) + len_cat_B, i['Name'], Round(i['RA']), Round(i['DE']), False, i['class']) for i in dr]
 
 
 con = sqlite3.connect('db.sqlite3')
@@ -25,30 +45,24 @@ except Exception as error:
     print(error)
 
 try:
-    cursor.executemany("INSERT INTO source_source(Name,RA,Dec,isObserved,category) VALUES(?,?,?,?,?)", to_db_src)
+    cursor.executemany("INSERT INTO source_source(id, Name,RA,Dec,isObserved,category) VALUES(?,?,?,?,?,?)", to_db_src_A)
     con.commit()
 except Exception as error:
     print(error)
 
+
+try:
+    cursor.executemany("INSERT INTO source_source(id, Name,RA,Dec,isObserved,category) VALUES(?,?,?,?,?,?)", to_db_src_B)
+    con.commit()
+except Exception as error:
+    print(error)
+
+
 for entry in src_pub:
-    source = entry[0]
-    papers = entry[1]
-    papers = papers.split(",")
-    query_res = cursor.execute("SELECT id FROM source_source" + " WHERE Name = '" + source + "';")
-    for row in query_res:
-        src_id = row[0]
-    pprs = []
-    for paper in papers:
-        if paper == "-":
-            continue
-        query = "SELECT id FROM source_publication" + " WHERE identifier = " + paper + ";"
-        query_res = cursor.execute(query)
-        for row in query_res:
-            pprs.append((src_id, row[0]))
-    if papers[0] == "-":
+    if entry[1][0] == "-":
         continue
     try:
-        cursor.executemany("INSERT INTO source_source_Publications(source_id,publication_id) VALUES(?,?)", pprs)
+        cursor.execute("INSERT INTO source_source_Publications(source_id,publication_id) VALUES(?,?)", entry)
         con.commit()
     except Exception as error:
         print(error)

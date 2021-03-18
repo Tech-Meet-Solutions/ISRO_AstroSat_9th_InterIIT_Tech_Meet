@@ -17,7 +17,7 @@ class SourceSerializer(serializers.ModelSerializer):
         #          'RA',
         #          'Dec',
         #          'category')
-        fields = ('pk',
+        fields = ('id',
                   'Name',
                   'RA',
                   'Dec',

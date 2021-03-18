@@ -3,7 +3,7 @@ from django.db import models
 
 # Create your models here.
 class Publication(models.Model):
-    identifier = models.IntegerField(default=0)
+    identifier = models.IntegerField(default=0, primary_key=True)
     Name = models.TextField()
     URL = models.TextField()
 
@@ -13,6 +13,7 @@ class Publication(models.Model):
 
 class Source(models.Model):
     # Cosmic Sources
+    id = models.IntegerField(default=0, primary_key=True)
     Name = models.CharField(max_length=100)
     RA = models.FloatField()
     Dec = models.FloatField()
