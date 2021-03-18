@@ -13,11 +13,12 @@ class PublicationSerializer(serializers.ModelSerializer):
 class SourceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Source
-        #fields = ('Name',
+        # fields = ('Name',
         #          'RA',
         #          'Dec',
         #          'category')
-        fields = ('Name',
+        fields = ('pk',
+                  'Name',
                   'RA',
                   'Dec',
                   'isObserved',
