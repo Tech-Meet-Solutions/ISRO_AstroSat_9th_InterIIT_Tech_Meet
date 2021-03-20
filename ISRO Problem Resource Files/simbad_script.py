@@ -2,18 +2,52 @@ from astroquery.simbad import Simbad
 import csv, sys
 import re
 
+#def join_with_space(word_list):
+#	#expects a non zero word_list list
+#	print(word_list)
+#	reg_word=word_list[0]
+#	for word in word_list[1:] :
+#		if "+" in word:
+#			i=0
+#			while i<len(word):
+#			
+#				print(word[i])
+#				if word[i]=="+":
+#					word = word[:i]+"\s*\\"+word[i]+"\s*"+word[i+1:]
+#					i+=6	
+#		reg_word+="\s*"+word
+#	print(reg_word)
+#	reg
+#	return reg_word
+
 def join_with_space(word_list):
 	#expects a non zero word_list list
 	reg_word=word_list[0]
+	if "*" in word_list:
+		return join_with_space(word_list[1:])
+	
+	#print(word_list)
 	for word in word_list[1:] :
-		if word
+		if "*" in word:
+			continue		
 		reg_word+="\s*"+word
+	#print(reg_word)
+	if "+" in reg_word:
+		reg_word = re.sub(r"\+",r'\\s\*+\\s\*',reg_word)
+	new_word=""
+
+	#print(reg_word)
 	return reg_word
+
+#print(join_with_space("GRS 1905+251  ".split()))
 
 
 def is_match(reg_word,line):
+	#print("is_match  ",reg_word)
 	x = re.search(reg_word, line)
+
 	if x :
+
 		return True
 	return False
 
@@ -21,9 +55,10 @@ def search_source(pub,index,line, source_identifiers, not_found):
 	sources_found = []
 
 	for key in source_identifiers:
-		#if key in not_found:
-		#	print("FOUND A MATCH in not found")
-		#	continue
+		
+		if key in not_found:
+			
+			continue
 		word = join_with_space(key.split())
 		
 		if is_match(word, line) :
@@ -32,13 +67,15 @@ def search_source(pub,index,line, source_identifiers, not_found):
 			#print("found ", key," in ", line )
 			continue
 		for src in source_identifiers[key]:
-			if src in line:
+			word = join_with_space(src.split())
+			if is_match(src,line):
 				#print("FOUND A MATCH")
 				#print(line, src)
 				sources_found.append(key)
 				break
-	print(sources_found)
+		#print("Sources: ",sources_found)
 	pub[index]+=sources_found
+	#print(pub[index])
 	return sources_found
 
 
@@ -71,17 +108,18 @@ for src in source_names:
 
 #print(source_identifiers)
 #print(source_identifiers[source_names[1]][1])
-
+#print(source_identifiers)
 publication_file = "AS_publications2019-21.txt"
 #print(source_identifiers)
 c = 0
 bib_to_index = {}
+pub = {}
 with open(publication_file) as file:
 	#csv_reader = csv.reader(file, delimiter=",")
 	bib = ""
-	pub = {}
+	
 	index = 0
-	appeared_in = []
+	#appeared_in = []
 	for row in file:
 		if "Title:" in row:
 			pub[index] = []
