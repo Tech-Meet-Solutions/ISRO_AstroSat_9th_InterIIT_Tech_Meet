@@ -1,4 +1,4 @@
-Title:        A machine learning approach for classification of accretion states of black hole binaries
+Title:        A machine learning approach for classification of accretion states of black hole binaries USNO-A2.0 0975-07375132
  Authors:        Sreehari, H., & Nandi, A.
  Bibliographic Code:         2021MNRAS.502.1334S
  Keywords: accretion, accretion disc, black hole physics, methods: data analysis, X-rays: binaries, Astrophysics - High Energy Astrophysical Phenomena
