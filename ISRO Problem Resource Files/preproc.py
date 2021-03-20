@@ -1,7 +1,8 @@
+import numpy as np
+
 from astropy.io import ascii
 from astropy.table import vstack, Column
 import astropy.units as u
-import numpy as np
 
 lm_tab = ascii.read("lmxbcat.dat", readme="ReadMe")
 c = Column(data=['lmxb'] * len(lm_tab), name='class', dtype='str')
