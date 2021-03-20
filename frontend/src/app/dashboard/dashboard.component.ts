@@ -21,7 +21,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.aladin = A.aladin('#aladin-lite-div', { survey: "P/DSS2/color", fov: 1.5 });
+    this.aladin = A.aladin('#aladin-lite-div', { survey: "P/Fermi/color", fov: 50 });
     this.server.get('/api/list/').subscribe(
       response => {
         this.data = response.sources;
@@ -54,8 +54,8 @@ export class DashboardComponent implements OnInit {
       else
         src_notobs.push(A.source(this.data[i].RA, this.data[i].Dec, this.data[i]));
     }
-    var cat_obs = A.catalog({ shape: 'square', color: '#5d5', onClick: 'showTable', sourceSize: 16 });
-    var cat_notobs = A.catalog({ shape: 'circle', color: '#f00', onClick: 'showTable', sourceSize: 16 });
+    var cat_obs = A.catalog({ shape: 'square', color: '#5d5', onClick: 'showPopup', sourceSize: 16 });
+    var cat_notobs = A.catalog({ shape: 'circle', color: '#f00', onClick: 'showPopup', sourceSize: 16 });
     this.aladin.addCatalog(cat_obs);
     this.aladin.addCatalog(cat_notobs);
     cat_obs.addSources(src_obs);
