@@ -1,3 +1,12 @@
-<p>dashboard works!</p>
-
-<div id="aladin-lite-div" style="width:700px;height:400px;"></div>
+<mat-grid-list cols="14">
+  <mat-grid-tile colspan="2">
+    <mat-grid-tile-header>Legend</mat-grid-tile-header>
+  </mat-grid-tile>
+  <mat-grid-tile colspan="7" rowspan="6">
+    <mat-grid-tile-header>Tile 3</mat-grid-tile-header>
+    <div id="aladin-lite-div" style="width:100%; height:80%;"></div>
+  </mat-grid-tile>
+  <mat-grid-tile colspan="5">
+    <mat-grid-tile-header>Mollweide</mat-grid-tile-header>
+  </mat-grid-tile>
+</mat-grid-list>
