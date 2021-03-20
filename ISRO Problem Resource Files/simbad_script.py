@@ -2,23 +2,6 @@ from astroquery.simbad import Simbad
 import csv, sys
 import re
 
-#def join_with_space(word_list):
-#	#expects a non zero word_list list
-#	print(word_list)
-#	reg_word=word_list[0]
-#	for word in word_list[1:] :
-#		if "+" in word:
-#			i=0
-#			while i<len(word):
-#			
-#				print(word[i])
-#				if word[i]=="+":
-#					word = word[:i]+"\s*\\"+word[i]+"\s*"+word[i+1:]
-#					i+=6	
-#		reg_word+="\s*"+word
-#	print(reg_word)
-#	reg
-#	return reg_word
 
 def join_with_space(word_list):
 	#expects a non zero word_list list
@@ -33,10 +16,10 @@ def join_with_space(word_list):
 		reg_word+="\s*"+word
 	#print(reg_word)
 	if "+" in reg_word:
-		reg_word = re.sub(r"\+",r'\\s\*+\\s\*',reg_word)
-	new_word=""
+		reg_word = re.sub(r"\+",r'\\s*\+\\s*',reg_word)
+	# new_word=""
 
-	#print(reg_word)
+	# print(reg_word)
 	return reg_word
 
 #print(join_with_space("GRS 1905+251  ".split()))
@@ -45,9 +28,7 @@ def join_with_space(word_list):
 def is_match(reg_word,line):
 	#print("is_match  ",reg_word)
 	x = re.search(reg_word, line)
-
 	if x :
-
 		return True
 	return False
 
@@ -57,7 +38,6 @@ def search_source(pub,index,line, source_identifiers, not_found):
 	for key in source_identifiers:
 		
 		if key in not_found:
-			
 			continue
 		word = join_with_space(key.split())
 		
@@ -127,7 +107,7 @@ with open(publication_file) as file:
 			#pub[index]+=pl
 		if "Keywords:" in row:
 			pl = search_source(pub,index,row, source_identifiers, not_found)
-			pub[index]+=pl
+			# pub[index]+=pl
 		if "Abstract:" in row:
 			#pub[index] = []
 			pl = search_source(pub,index,row, source_identifiers, not_found)
@@ -141,3 +121,15 @@ with open(publication_file) as file:
 print(pub)
 #print(bib_to_index)
 #print(index)
+
+values_sources = set()
+count =0
+for i in source_identifiers:
+	for j in source_identifiers[i]:
+		count +=1
+		values_sources.add(j)
+
+# print(len(source_identifiers))
+# print(len(values_sources), count)	
+	
+
