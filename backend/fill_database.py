@@ -6,7 +6,10 @@ import sys
 def Round(a):
     return float(np.round(float(a), 4))
 
-
+def convert_bool(a):
+    if a=="True":
+        return True
+    return False
 with open('data/publications.csv', 'r') as fin:
     dr = csv.DictReader(fin)
     to_db_pub = [(i['ID'], i['TITLE'], i['URL']) for i in dr]
@@ -16,7 +19,7 @@ src_pub = []
 with open('data/summaryB.csv', 'r') as fin:
     dr = csv.DictReader(fin)
     len_cat_B = 0
-    to_db_src_B = [(i['idx'], i['name'], Round(i['ra']), Round(i['dec']), i['ins']) for i in dr]
+    to_db_src_B = [(i['idx'], str(i['name']), Round(i['ra']), Round(i['dec']), str(i['ins'])) for i in dr]
 
 
 # To fill db with catalog A sources
@@ -32,7 +35,7 @@ with open('data/summaryA.csv', 'r') as fA:
     l1=[]
     
     dr = csv.DictReader(fA)
-    l1 = [ (i['Id'], i['Name'], i['RA'], i['DE'], i['class']) for i in dr]
+    l1 = [ (i['Id'], str(i['Name']), i['RA'], i['DE'], str(i['class'])) for i in dr]
     
 with open('data/observed_A.csv','r') as f_obs:
     l2 = []
@@ -44,7 +47,7 @@ to_db_src_A = []
 for i in zip(l1,l2):
     a = i[0]
     b = i[1]
-    to_db_src_A.append((a[0],a[1],a[2],a[3],b[0],b[1],b[2],b[3],a[4]))
+    to_db_src_A.append((a[0],a[1],a[2],a[3],convert_bool(b[0]),convert_bool(b[1]),convert_bool(b[2]),convert_bool(b[3]),a[4]))
 
     #id,Name,RA,Dec,uvit,sxt,laxpc,czti,category
 
