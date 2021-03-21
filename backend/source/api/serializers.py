@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from source.models import Publication, Source
+from source.models import Publication, SourceA, SourceB
 
 
 class PublicationSerializer(serializers.ModelSerializer):
@@ -10,17 +10,34 @@ class PublicationSerializer(serializers.ModelSerializer):
                   'URL')
 
 
-class SourceSerializer(serializers.ModelSerializer):
+
+class SourceBSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Source
-        # fields = ('Name',
-        #          'RA',
-        #          'Dec',
-        #          'category')
+        model = SourceB
+       
         fields = ('id',
                   'Name',
                   'RA',
                   'Dec',
-                  'isObserved',
-                  'Publications',
                   'category')
+
+class SourceASerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SourceA
+       
+        fields = ('id',
+                  'Name',
+                  'RA',
+                  'Dec',
+                  'isObserved_uvit',
+                  'isObserved_sxt',
+                  'isObserved_laxpc',
+                  'isObserved_czti',
+                  'Publications',
+                  'category',
+                  'uvit',
+                  'sxt',
+                  'laxpc',
+                  'czti')
+
+
