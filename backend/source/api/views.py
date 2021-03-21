@@ -4,8 +4,8 @@ from rest_framework.decorators import api_view
 from django.core import serializers
 from django.http.response import JsonResponse
 
-from source.models import Source
-from source.api.serializers import SourceSerializer, PublicationSerializer
+from source.models import SourceA, SourceB
+from source.api.serializers import SourceASerializer,SourceBSerializer, PublicationSerializer
 
 
 # Get Source Info
@@ -13,8 +13,8 @@ from source.api.serializers import SourceSerializer, PublicationSerializer
 def get_source_list(request):
     if request.method == 'GET':
         data = {}
-        all_entries = Source.objects.all()
-        serializer = SourceSerializer(all_entries, many=True)
+        all_entries = SourceA.objects.all()
+        serializer = SourceASerializer(all_entries, many=True)
         data["sources"] = serializer.data
         return Response(data, status=status.HTTP_200_OK)
 ###################################################################
@@ -27,7 +27,7 @@ def get_source_info(request, pk):
         data = {}
         publications = []
         
-        source = Source.objects.get(id=pk)
+        source = SourceA.objects.get(id=pk)
         data['id'] = source.id
         data['Name'] = source.Name
         data['RA'] = source.RA
