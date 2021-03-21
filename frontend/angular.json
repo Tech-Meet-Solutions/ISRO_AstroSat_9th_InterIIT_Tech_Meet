@@ -34,7 +34,8 @@
             ],
             "scripts": [
               "src/assets/js/jquery-1.9.1.min.js",
-              "src/assets/js/aladin.min.js"
+              "src/assets/js/aladin.min.js",
+              "node_modules/plotly.js/dist/plotly.min.js"
             ]
           },
           "configurations": {

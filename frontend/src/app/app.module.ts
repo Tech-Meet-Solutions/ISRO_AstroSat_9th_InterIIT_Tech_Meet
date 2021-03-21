@@ -12,6 +12,8 @@ import { ObjectComponent } from './object/object.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatGridListModule } from '@angular/material/grid-list';
 
+import { PlotlyViaWindowModule } from 'angular-plotly.js';
+
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
     AppRoutingModule,
     BrowserAnimationsModule,
     MatToolbarModule,
-    MatGridListModule
+    MatGridListModule,
+    PlotlyViaWindowModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
