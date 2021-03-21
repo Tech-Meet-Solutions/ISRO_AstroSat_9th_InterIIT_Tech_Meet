@@ -1,5 +1,5 @@
 export interface Source {
-  pk: number;
+  id: number;
   Name: string;
   RA: number;
   Dec: number;

@@ -21,7 +21,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.aladin = A.aladin('#aladin-lite-div', { survey: "P/Fermi/color", fov: 50 });
+    this.aladin = A.aladin('#aladin-lite-div', { cooFrame: "galactic", survey: "P/Fermi/color", fov: 60 });
     this.server.get('/api/list/').subscribe(
       response => {
         this.data = response.sources;
@@ -49,10 +49,11 @@ export class DashboardComponent implements OnInit {
     var src_obs = [];
     var src_notobs = [];
     for (var i = 0; i < this.data.length; ++i) {
-      if (this.data[i].isObserved)
-        src_obs.push(A.source(this.data[i].RA, this.data[i].Dec, this.data[i]));
+      let si = this.data[i];
+      if (si.isObserved)
+        src_obs.push(A.marker(si.RA, si.Dec, { popupTitle: si.Name, popupDesc: `<em>RA:</em> ${si.RA}<br/><em>Dec:</em> ${si.Dec}<br/><em>Cat:</em> ${si.category}<br/><a target="_blank" href="/object/${si.id}">More Info</a>` }));
       else
-        src_notobs.push(A.source(this.data[i].RA, this.data[i].Dec, this.data[i]));
+        src_notobs.push(A.marker(si.RA, si.Dec, { popupTitle: si.Name, popupDesc: `<em>RA:</em> ${si.RA}<br/><em>Dec:</em> ${si.Dec}<br/><em>Cat:</em> ${si.category}<br/><a target="_blank" href="/object/${si.id}">More Info</a>` }));
     }
     var cat_obs = A.catalog({ shape: 'square', color: '#5d5', onClick: 'showPopup', sourceSize: 16 });
     var cat_notobs = A.catalog({ shape: 'circle', color: '#f00', onClick: 'showPopup', sourceSize: 16 });
@@ -61,7 +62,6 @@ export class DashboardComponent implements OnInit {
     cat_obs.addSources(src_obs);
     cat_notobs.addSources(src_notobs);
 
-    this.aladin.gotoRaDec(0, 0);
+    // this.aladin.gotoRaDec(0, 0);
   }
-
 }

@@ -19,7 +19,7 @@ export class ObjectComponent implements OnInit {
     private server: ServerService
   ) {
     this.data = {
-      pk: 0,
+      id: 0,
       Name: '',
       RA: 0,
       Dec: 0,
