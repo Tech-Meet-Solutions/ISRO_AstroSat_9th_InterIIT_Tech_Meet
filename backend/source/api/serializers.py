@@ -10,6 +10,17 @@ class PublicationSerializer(serializers.ModelSerializer):
                   'URL')
 
 
+
+class SourceBSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SourceB
+       
+        fields = ('id',
+                  'Name',
+                  'RA',
+                  'Dec',
+                  'category')
+
 class SourceASerializer(serializers.ModelSerializer):
     class Meta:
         model = SourceA
@@ -24,18 +35,9 @@ class SourceASerializer(serializers.ModelSerializer):
                   'isObserved_czti',
                   'Publications',
                   'category',
-                  'common_uvit'
-                  'common_sxt'
-                  'common_laxpc'
-                  'common_czti')
+                  'uvit',
+                  'sxt',
+                  'laxpc',
+                  'czti')
 
 
-class SourceBSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = SourceB
-       
-        fields = ('id',
-                  'Name',
-                  'RA',
-                  'Dec',
-                  'category')

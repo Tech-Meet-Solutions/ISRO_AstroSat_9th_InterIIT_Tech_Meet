@@ -39,9 +39,9 @@ class SourceA(models.Model):
     Publications = models.ManyToManyField(Publication)
     category = models.CharField(max_length=10, default="")
     uvit = models.ManyToManyField(SourceB,related_name = 'UV')
-    sxt = models.ManyToManyField(SourceB,'XT')
-    laxpc = models.ManyToManyField(SourceB,'PC')
-    czti = models.ManyToManyField(SourceB,'CZ')
+    sxt = models.ManyToManyField(SourceB,related_name='XT')
+    laxpc = models.ManyToManyField(SourceB,related_name='PC')
+    czti = models.ManyToManyField(SourceB,related_name='CZ')
 
     def __str__(self):
         return self.Name
