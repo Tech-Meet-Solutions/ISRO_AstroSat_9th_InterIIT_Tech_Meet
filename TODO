@@ -1,11 +1,11 @@
 Dashboard
 Mollweide
-line width dec
-try transparency, don't change marker size
-disable click on extra line
+line width dec - Done
+try transparency, don't change marker size - Done, added border as well
+disable click on extra line - Not possible, seems useful tbh
 
 Aladin
-Add Name the catalogs
+Add Name the catalogs - Done
 
 Sidebar
 Reduce size of sidebar
@@ -18,9 +18,9 @@ Pan* color - native
 WISE - native
 
 Legend
-checkbox for instruments - special fill
-color - hmxb vs lmxb
-shape - observed vs unobserved
+checkbox for instruments (special fill)
+color (hmxb vs lmxb) - Done, need to decide color
+shape (observed vs unobserved)
 
 Footer
 
