@@ -1,0 +1,56 @@
+
+
+table {
+    width: 90%;
+    border:20px;
+    margin:auto;
+  }
+  
+
+.laxpc, .czti, .uvit, .others, .sxt{
+    color:rgba(0,0,0,.54);
+    font-size: 12px;
+    font-weight: 500;
+    border-style: solid;
+  
+    
+    border-width: 1px; border-color: rgb(160,160,255);
+    border-left: none;
+    border-top: none;
+    border-right: none;
+}
+  .laxpc{
+    background-color: #075239;
+}
+.sxt{
+    background-color: yellow;
+}
+.uvit{
+    background-color:#99ff9f;
+}
+.czti{
+    background-color:#ffffff;
+}
+.others{
+    background-color:#f23fff;
+}
+#name{
+    padding-left:24px;
+}
+
+.mat-column-abstract, #abstract{
+    word-wrap: break-word;
+    max-width: 100px;
+}
+
+button{
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+    color:rgb(3, 3, 97);
+    font-size: 12px;
+    font-weight: 500;
+}

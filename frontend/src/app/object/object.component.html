@@ -1,1 +1,82 @@
-<p>object works!</p>
+<div>
+    SOURCE A Details: <br/>
+    RA : {{dataA.RA}}<br>
+    DEC : {{dataA.Dec}}  <br>
+    Publications : {{dataA.Publications}} <br>
+    Category : {{dataA.category}} <br>
+<br>
+
+</div>
+<div>
+  <table mat-table  [dataSource]="dataSource" class="mat-elevation-z8">
+    
+         
+    
+    
+    <!-- Position Column -->
+    <!--<ng-container matColumnDef="position">
+      <th mat-header-cell *matHeaderCellDef> No. </th>
+      <td mat-cell  [className]="assignClass(element.category)" *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>-->
+  
+    <!-- Name Column -->
+    <ng-container matColumnDef="Name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      
+      <td  mat-cell [className] = "assignClass(element.category)" id=name  *matCellDef="let element"> {{element.Name}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="RA, Dec">
+        <th mat-header-cell *matHeaderCellDef> (Ra, Dec) </th>
+        
+        <td mat-cell [className]="assignClass(element.category)" *matCellDef="let element"> {{element.RA}},  {{element.Dec}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="PL">
+        <th mat-header-cell *matHeaderCellDef> PL </th>
+        
+        <td mat-cell [className]="assignClass(element.category)" *matCellDef="let element"> PL </td>
+      </ng-container>
+
+      <ng-container matColumnDef="abstract">
+        <th mat-header-cell *matHeaderCellDef> Abstract </th>
+        
+        <td mat-cell [className]="assignClass(element.category)" id=abstract  *matCellDef="let element"> 
+          {{ dummy.substring(0,100) }}
+          <span id="points{{element.id}}">...</span>
+          <span style="display: none" id="moreText{{element.id}}"> {{dummy.substring(100)}} </span>
+          <button class="text-toogle-btn" (click)="toggleText(this, element.id)" id="textButton{{element.id}}"> 
+            Show More 
+        </button>
+
+        </td>
+      </ng-container>
+  
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="category">
+      <th mat-header-cell *matHeaderCellDef> Category </th>
+      
+
+      <td mat-cell [className]="assignClass(element.category)"  *matCellDef="let element"> {{element.category}} </td>
+    </ng-container>
+    
+    
+    
+
+
+   <tr mat-header-row *matHeaderRowDef="displayedColumns">
+    
+
+   </tr>
+    <tr mat-row  *matRowDef="let row; columns: displayedColumns;"
+        (click)="selection.toggle(row)">
+    </tr>    
+  
+
+  
+</table>
+
+
+</div>
+
