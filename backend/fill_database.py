@@ -35,7 +35,7 @@ with open('data/summaryA.csv', 'r') as fA:
     l1=[]
     
     dr = csv.DictReader(fA)
-    l1 = [ (i['Id'], str(i['Name']), i['RA'], i['DE'], str(i['class'])) for i in dr]
+    l1 = [ (i['Id'], str(i['Name']), Round(i['RA']), Round(i['DE']), str(i['class'])) for i in dr]
     
 with open('data/observed_A.csv','r') as f_obs:
     l2 = []
