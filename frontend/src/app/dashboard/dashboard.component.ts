@@ -42,41 +42,35 @@ export class DashboardComponent implements OnInit {
       }
     );
 
-    // var marker1 = A.marker(270.332621, -23.078944, { popupTitle: 'PSR B1758-23', popupDesc: 'Object type: Pulsar' });
-    // var marker2 = A.marker(270.63206, -22.905550, { popupTitle: 'HD 164514', popupDesc: 'Object type: Star in cluster' });
-    // var marker3 = A.marker(270.598121, -23.030819, { popupTitle: 'HD 164492', popupDesc: 'Object type: Double star' });
-    // var markerLayer = A.catalog({ color: '#800080' });
-    // markerLayer.addSources([marker1, marker2, marker3]);
-    // this.aladin.addCatalog(markerLayer);
-
-    // this.aladin.addCatalog(A.catalogFromSimbad('M 20', 0.2, { shape: 'plus', color: '#5d5', onClick: 'showTable' }));
-    // this.aladin.addCatalog(A.catalogFromVizieR('J/ApJ/562/446/table13', 'M 20', 0.2, { shape: 'square', sourceSize: 8, color: 'red', onClick: 'showPopup' }));
   }
 
   update(): void {
-    var src_obs = [];
-    var src_notobs = [];
+    var src_lmxb = [];
+    var src_hmxb = [];
     for (var i = 0; i < this.data.length; ++i) {
       let si = this.data[i];
-      if (si.isObserved)
-        src_obs.push(A.source(si.RA, si.Dec, { Name: si.Name, Desc: `<em>RA:</em> ${si.RA}<br/><em>Dec:</em> ${si.Dec}<br/><em>Cat:</em> ${si.category}<br/><a target="_blank" href="/object/${si.id}">More Info</a>` }));
-      else
-        src_notobs.push(A.source(si.RA, si.Dec, { Name: si.Name, Desc: `<em>RA:</em> ${si.RA}<br/><em>Dec:</em> ${si.Dec}<br/><em>Cat:</em> ${si.category}<br/><a target="_blank" href="/object/${si.id}">More Info</a>` }));
+      if (si.category === "lmxb")
+        src_lmxb.push(A.source(si.RA, si.Dec, { Name: si.Name, RA: si.RA, Dec: si.Dec, '': `<a target="_blank" href="/object/${si.id}">More Info</a>` }));
+      if (si.category == 'hmxb')
+        src_hmxb.push(A.source(si.RA, si.Dec, { Name: si.Name, RA: si.RA, Dec: si.Dec, '': `<a target="_blank" href="/object/${si.id}">More Info</a>` }));
     }
-    var cat_obs = A.catalog({ shape: 'square', color: '#5d5', onClick: 'showPopup', sourceSize: 16 });
-    var cat_notobs = A.catalog({ shape: 'circle', color: '#f00', onClick: 'showPopup', sourceSize: 16 });
-    this.aladin.addCatalog(cat_obs);
-    this.aladin.addCatalog(cat_notobs);
-    cat_obs.addSources(src_obs);
-    cat_notobs.addSources(src_notobs);
+    var cat_lmxb = A.catalog({ shape: 'square', color: '#5d5', onClick: 'showPopup', sourceSize: 16 });
+    var cat_hmxb = A.catalog({ shape: 'circle', color: '#f00', onClick: 'showPopup', sourceSize: 16 });
+    this.aladin.addCatalog(cat_lmxb);
+    this.aladin.addCatalog(cat_hmxb);
+    cat_lmxb.addSources(src_lmxb);
+    cat_hmxb.addSources(src_hmxb);
 
     // this.aladin.gotoRaDec(0, 0);
   }
 
   mollweide(): void {
     this.plot.data = [{
-      lon: this.data.map(function (value, index) { return value.RA; }),
+      lon: this.data.map(function (value, index) { return -value.RA; }),
       lat: this.data.map(function (value, index) { return value.Dec; }),
+      text: this.data.map(function (value, index) { return `(${value.RA}, ${value.Dec})` }),
+      hoverinfo: 'text',
+      hoverlabel: { bgcolor: '#41454c' },
       type: 'scattergeo'
     }];
 
@@ -132,7 +126,7 @@ export class DashboardComponent implements OnInit {
     console.log('xx');
     console.log(event);
     console.log(event.points[0].lat);
-    console.log(event.points[0].lon);
-    this.aladin.gotoRaDec(event.points[0].lon, event.points[0].lat);
+    console.log(-event.points[0].lon);
+    this.aladin.gotoRaDec(-event.points[0].lon, event.points[0].lat);
   }
 }
