@@ -13,7 +13,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatGridListModule } from '@angular/material/grid-list';
 
 import { PlotlyViaWindowModule } from 'angular-plotly.js';
-
+import { MatTableModule } from '@angular/material/table' 
 
 @NgModule({
   declarations: [
@@ -30,6 +30,7 @@ import { PlotlyViaWindowModule } from 'angular-plotly.js';
     MatToolbarModule,
     MatGridListModule,
     PlotlyViaWindowModule,
+    MatTableModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
