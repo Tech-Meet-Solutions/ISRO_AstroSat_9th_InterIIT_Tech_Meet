@@ -1,0 +1,68 @@
+Dashboard
+Mollweide
+line width dec
+try transparency, don't change marker size
+disable click on extra line
+
+Aladin
+Add Name the catalogs
+
+Sidebar
+Reduce size of sidebar
+Fermi - grayscale
+SWIFT BAT FLUX - grayscale
+Galex - native
+DSS color - native
+Pan* color - native
+2MASS - native
+WISE - native
+
+Legend
+checkbox for instruments - special fill
+color - hmxb vs lmxb
+shape - observed vs unobserved
+
+Footer
+
+
+Individual Page
+Name - string
+Type - string
+RA - float
+DE - float
+GLON - float
+GLAT - float
+Opt - string
+r_Opt - list of numbers
+Vmag - float
+B-V - float
+U-B - float
+E(B-V) - float
+r_Vmag - list of numbers
+Fx - float
+Range - string
+r_Fx - list of numbers
+Porb - float
+Porb2 - float
+Ppulse - float
+r_Ppulse - list of numbers
+Cat - string
+SpType - string
+class - string
+
+Object - string
+obsid - string
+RA - float
+Dec - float
+category - string
+date_time - string
+proposal_id - string
+target_id - string
+observer - string
+abstract - textfield
+
+Title - textfield
+Authors - textfield
+Bibliographic Code - string
+Keywords - textfield
+Abstract - textfield
