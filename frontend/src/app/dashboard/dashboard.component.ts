@@ -47,7 +47,67 @@ export class DashboardComponent implements OnInit {
         console.log(error);
       }
     );
+    this.plot.layout = {
+      title: 'Mollweide',
+      autosize: true,
+      hovermode: 'closest',
+      dragmode: false,
+      showlegend: false,
+      // margin: {
+      //   l: 20,
+      //   b: 0,
+      //   r: 20,
+      //   t: 0
+      // },
+      geo: {
+        projection: {
+          type: 'mollweide',
+          scale: 0.8
+        },
+        showcoastlines: false,
+        lonaxis: {
+          showgrid: true,
+          dtick: 30,
+          gridwidth: 0.5,
+          gridcolor: '#000',
+          range: [-360, 0]
+        },
+        lataxis: {
+          showgrid: true,
+          dtick: 15,
+          gridwidth: 0.5,
+          gridcolor: '#000',
+        },
+        visible: false,
+        bgcolor: '#fff'
+      },
+    };
 
+    this.plot.config = {
+      displaylogo: false,
+      modeBarButtonsToRemove: [
+        'toImage',
+        // 'zoom2d',
+        'pan2d',
+        'select2d',
+        'lasso2d',
+        // 'zoomIn2d',
+        // 'zoomOut2d',
+        // 'autoScale2d',
+        // 'resetScale2d',
+        // 'zoomInGeo',
+        // 'zoomOutGeo',
+        'resetGeo',
+        'hoverClosestGeo',
+        // 'hoverClosestGl2d',
+        // 'hoverClosestPie',
+        // 'toggleHover',
+        // 'resetViews',
+        // 'sendDataToCloud',
+        // 'toggleSpikelines',
+        // 'resetViewMapbox'
+      ]
+    };
   }
 
   update(): void {
@@ -137,42 +197,6 @@ export class DashboardComponent implements OnInit {
         color: 'black'
       }
     }];
-
-    this.plot.layout = {
-      title: 'Mollweide',
-      hovermode: 'closest',
-      dragmode: false,
-      margin: {
-        l: 20,
-        b: 0,
-        r: 20,
-        t: 0
-      },
-      geo: {
-        projection: {
-          type: 'mollweide',
-          scale: 0.8
-        },
-        showcoastlines: false,
-        lonaxis: {
-          showgrid: true,
-          dtick: 30,
-          gridwidth: 1,
-          gridcolor: '#000',
-          range: [-360, 0]
-        },
-        lataxis: {
-          showgrid: true,
-          dtick: 10,
-          gridwidth: 1,
-          gridcolor: '#000',
-        },
-        visible: false,
-        bgcolor: '#fff'
-      },
-    };
-
-    this.plot.config = { displaylogo: false };
   }
 
   click_plot(event): void {
