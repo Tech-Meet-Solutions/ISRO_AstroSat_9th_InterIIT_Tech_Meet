@@ -72,21 +72,21 @@ export class DashboardComponent implements OnInit {
       hoverinfo: 'text',
       hoverlabel: { bgcolor: '#41454c' },
       type: 'scattergeo'
+    },
+    {
+      type: 'scattergeo',
+      lat: [90, -90],
+      lon: [-360, -360],
+      mode: 'lines',
+      line: {
+        width: 1,
+        color: 'black'
+      }
     }];
 
     this.plot.layout = {
       title: 'Mollweide',
-      // autosize: false,
-      // width: 750,
-      // height: 750,
-      // hovermode: 'closest',
-      // scene: {
-      //   xaxis: { showticklabels: false, zeroline: false, title: '' },
-      //   yaxis: { showticklabels: false, zeroline: false, title: '' },
-      //   zaxis: { showticklabels: false, title: '' },
-      // }
-      // clickmode: "event+select",
-      // itemclick: false,
+      hovermode: 'closest',
       dragmode: false,
       margin: {
         l: 20,
@@ -102,11 +102,10 @@ export class DashboardComponent implements OnInit {
         showcoastlines: false,
         lonaxis: {
           showgrid: true,
-          dtick: 45,
-          // tick0: 45,
+          dtick: 30,
           gridwidth: 1,
           gridcolor: '#000',
-          range: [0, 360]
+          range: [-360, 0]
         },
         lataxis: {
           showgrid: true,
