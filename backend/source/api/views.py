@@ -11,11 +11,15 @@ from rest_framework.renderers import JSONRenderer
 # Get Source Info
 @api_view(['GET', ])
 def get_source_list(request):
+    # id,name,ra,dec
     if request.method == 'GET':
         data = {}
-        all_entries = SourceA.objects.all()
-        serializer = SourceASerializer(all_entries, many=True)
-        data["sources"] = serializer.data
+        #all_entries =SourceA.objects.all()
+        fields = ('id','Name','Type','RA','Dec','GLON','GLAT','Class')
+        all_entries = SourceA.objects.all().only('id','Name','Type','RA','Dec','GLON','GLAT','Class')
+    
+        data["sources"] = SourceASerializer(all_entries, many=True, fields=fields).data
+        
         #data["SourcesA"] = JSONRenderer().render(serializer.data)
         
         return Response(data, status=status.HTTP_200_OK)
@@ -33,13 +37,31 @@ def get_source_info(request, pk):
         
         data['id'] = source.id
         data['Name'] = source.Name
+        data['Type'] = source.Type
         data['RA'] = source.RA
         data['Dec'] = source.Dec
-        data['category'] = source.category
-        data['isObserved_uvit'] = source.isObserved_uvit
-        data['isObserved_sxt'] = source.isObserved_sxt
-        data['isObserved_laxpc'] = source.isObserved_laxpc
-        data['isObserved_czti'] = source.isObserved_czti
+        data['GLON'] = source.GLON
+        data['GLAT'] = source.GLAT
+        data['Opt'] = source.Opt
+        data['r_Opt'] = source.r_Opt
+        data['Vmag'] = source.Vmag
+        data['B_V'] = source.B_V
+        data['U_B'] = source.U_B
+        data['E_BV'] = source.E_BV
+        data['r_Vmag'] = source.r_Vmag
+        data['Fx'] = source.Fx
+        data['Range'] = source.Range
+        data['r_Fx'] = source.r_Fx
+        data['Porb'] = source.Porb
+        data['Ppulse'] = source.Ppulse
+        data['r_Ppulse'] = source.r_Ppulse
+        data['Cat'] = source.Cat
+        data['SpType'] = source.SpType
+        data['Class'] = source.Class
+        
+        
+        
+        
         
         #data['CatalogA_data'] = data
         czti = []
@@ -47,10 +69,18 @@ def get_source_info(request, pk):
             for i in source.czti.all():
                 czti.append({
                     "id" : i.id,
-                    "Name" : i.Name,
+                    "Object" : i.Object,
+                    "obsid" : i.obsid,
                     "RA" : i.RA,
                     "Dec" : i.Dec,
-                    "category" : i.category
+                    "instrument" : i.instrument,
+                    "date_time" : i.date_time,
+                    "proposal_id" : i.proposal_id,
+                    "target_id" : i.target_id,
+                    "observer" : i.observer,
+                    "abstract" : i.abstract
+                    
+                    
                 })
 
 
@@ -61,10 +91,16 @@ def get_source_info(request, pk):
             for i in source.sxt.all():
                 sxt.append({
                     "id" : i.id,
-                    "Name" : i.Name,
+                    "Object" : i.Object,
+                    "obsid" : i.obsid,
                     "RA" : i.RA,
                     "Dec" : i.Dec,
-                    "category" : i.category
+                    "instrument" : i.instrument,
+                    "date_time" : i.date_time,
+                    "proposal_id" : i.proposal_id,
+                    "target_id" : i.target_id,
+                    "observer" : i.observer,
+                    "abstract" : i.abstract
                 })
 
 
@@ -75,10 +111,16 @@ def get_source_info(request, pk):
             for i in source.laxpc.all():
                 laxpc.append({
                     "id" : i.id,
-                    "Name" : i.Name,
+                    "Object" : i.Object,
+                    "obsid" : i.obsid,
                     "RA" : i.RA,
                     "Dec" : i.Dec,
-                    "category" : i.category
+                    "instrument" : i.instrument,
+                    "date_time" : i.date_time,
+                    "proposal_id" : i.proposal_id,
+                    "target_id" : i.target_id,
+                    "observer" : i.observer,
+                    "abstract" : i.abstract
                 })
 
 
@@ -89,10 +131,16 @@ def get_source_info(request, pk):
             for i in source.uvit.all():
                 uvit.append({
                     "id" : i.id,
-                    "Name" : i.Name,
+                    "Object" : i.Object,
+                    "obsid" : i.obsid,
                     "RA" : i.RA,
                     "Dec" : i.Dec,
-                    "category" : i.category
+                    "instrument" : i.instrument,
+                    "date_time" : i.date_time,
+                    "proposal_id" : i.proposal_id,
+                    "target_id" : i.target_id,
+                    "observer" : i.observer,
+                    "abstract" : i.abstract
                 })
 
 
@@ -105,4 +153,6 @@ def get_source_info(request, pk):
 
         return Response(data, status=status.HTTP_200_OK)
 ###################################################################
+
+
 
