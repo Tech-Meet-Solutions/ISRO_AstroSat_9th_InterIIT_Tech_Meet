@@ -15,9 +15,11 @@ with open('AS_observations_cat_Sept2018.csv') as csv_file:
     dr = csv.DictReader(csv_file)
     with open('summaryB.csv', mode='w') as csv_file2:
         writer = csv.writer(csv_file2, delimiter=',')
-        writer.writerow(['idx', 'name', 'ra', 'dec', 'ins'])
+        writer.writerow(['idx', 'date_time','proposal_id','target_id','obsid','object', 'ra', 'dec', 'ins'])
         for row in dr:
-            if ":: " in row['name']:
-                writer.writerow([row['idx'], row['name'].partition(":: ")[2], row['ra'], row['dec'], row['ins']])
+            if ":: " in row['obsid_object']:
+                writer.writerow([row['idx'],row['date'],row['Proposal_ID'],row['Target_ID'],
+                                 row['obsid_object'].partition(":: ")[0],row['obsid_object'].partition(":: ")[2], row['ra'], row['dec'], row['ins']])
             else:
-                writer.writerow([row['idx'], row['name'], row['ra'], row['dec'], row['ins']])
+                writer.writerow([row['idx'],row['date'],row['Proposal_ID'],row['Target_ID'],
+                                 "",row['obsid_object'], row['ra'], row['dec'], row['ins']])
