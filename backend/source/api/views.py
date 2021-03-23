@@ -40,8 +40,8 @@ def get_source_info(request, pk):
         data['Type'] = source.Type
         data['RA'] = source.RA
         data['Dec'] = source.Dec
-        data['GLON'] = source.GLON
-        data['GLAT'] = source.GLAT
+        #data['GLON'] = source.GLON
+        #data['GLAT'] = source.GLAT
         data['Opt'] = source.Opt
         data['r_Opt'] = source.r_Opt
         data['Vmag'] = source.Vmag
@@ -148,7 +148,12 @@ def get_source_info(request, pk):
 
         # loop over the publications for this source 
         for i in source.Publications.all():
-            publications.append([i.identifier,i.Name,i.URL])
+            publications.append({"identifier":i.identifier,
+                                "Name":  i.Name,
+                                "Bib" : i.Bib,
+                                "Authors": i.Authors,
+                                "Keywords":i.Keywords,
+                                "Abstract":i.Abstract})
         data['publications'] = publications
 
         return Response(data, status=status.HTTP_200_OK)
