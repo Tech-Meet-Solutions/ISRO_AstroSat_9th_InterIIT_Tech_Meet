@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ServerService } from '../server.service';
-import { SourceA, SourceB } from '../source';
+import { SourceA, SourceB, Paper, Source_Visibility } from '../source';
 import {SelectionModel} from '@angular/cdk/collections';
 import {MatTableDataSource} from '@angular/material/table';
-import { stringify } from '@angular/compiler/src/util';
+
 
 
 @Component({
@@ -13,13 +13,18 @@ import { stringify } from '@angular/compiler/src/util';
   styleUrls: ['./object.component.scss']
 })
 export class ObjectComponent implements OnInit {
-
+  myVar: number;
   id: string;
   dataA: SourceA;
   dataSource = new MatTableDataSource<SourceB>();
-  dummy: string;
+  dataSourcePapers = new MatTableDataSource<Paper>();
+  source_idx = new Set();
   selection = new SelectionModel<SourceB>(true, []);
-  displayedColumns: string[] = [  'Name','abstract', 'RA, Dec','category', 'PL', ];
+  visibility_array : { [id : number ] : Source_Visibility} ;
+  selectionPaper = new SelectionModel<Paper>(true, []);
+  displayedColumns: string[] = [  'Object','obsid','RA','Dec','instrument','date_time',
+                                'proposal_id','target_id','observer','abstract','visibilility'];
+  ColumnsPapers: string[] = ['Title', 'Authors','Keywords','Abstract']
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -27,22 +32,36 @@ export class ObjectComponent implements OnInit {
   ) {
     this.dataA = {
       id: 0,
-      Name: '',
+      Name : '',
+      Type: '',
       RA: 0,
       Dec: 0,
-      Publications: {},
-      isObserved_uvit: false,
-      isObserved_laxpc: false,
-      isObserved_czti: false,
-      isObserved_sxt: false,
-      category: '',
+      Opt:'',
+      r_Opt:'',
+      Vmag:'',
+      B_V:'',
+      U_B:'',
+      E_BV:'',
+      r_Vmag:'',
+      Fx:'',
+      Range:'',
+      Porb:'',
+      Ppulse:'',
+      r_Ppulse:'',
+      Cat:'',
+      SpType:'',
+      Class:'',
+
+      publications: Array<Paper>(),
+      
       uvit:Array<SourceB>(),
       sxt:Array<SourceB>(),
       laxpc:Array<SourceB>(),
       czti:Array<SourceB>()
     };
+    this.visibility_array = {};
     
-    this.dummy = "lorem Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi a consectetur facilis facere hic quidem atque ullam culpa, dolor sint, aspernatur repellat nobis, vitae tempora quia. Facilis quo tenetur quibusdam.lorem Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi a consectetur facilis facere hic quidem atque ullam culpa, dolor sint, aspernatur repellat nobis, vitae tempora quia. Facilis quo tenetur quibusdam.lorem Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi a consectetur facilis facere hic quidem atque ullam culpa, dolor sint, aspernatur repellat nobis, vitae tempora quia. Facilis quo tenetur quibusdam.lorem Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi a consectetur facilis facere hic quidem atque ullam culpa, dolor sint, aspernatur repellat nobis, vitae tempora quia. Facilis quo tenetur quibusdam."
+    
   }
 
   ngOnInit(): void {
@@ -53,10 +72,14 @@ export class ObjectComponent implements OnInit {
 
     this.server.get(`/api/info/${this.id}`).subscribe(
       response => {
+        this.myVar = 0;
         this.dataA = response;
         this.dataSource = new MatTableDataSource<SourceB>(this.dataA.czti.concat(this.dataA.czti,this.dataA.sxt,this.dataA.uvit,this.dataA.laxpc));
-        
+        console.log(this.dataA.publications);
+        console.log(this.dataA.czti);
         console.log("Done");
+        this.fill_visibility_array();
+        this.dataSourcePapers = new MatTableDataSource<Paper>(this.dataA.publications);
       },
       error => {
         console.log(error);
@@ -66,6 +89,38 @@ export class ObjectComponent implements OnInit {
 
 
   }
+
+
+    fill_visibility_array(){
+      console.log("inside vis func");
+      //let source_idx = new Set();
+      for(var source of this.dataA.czti ){
+        this.source_idx.add(source.id);
+      }
+      for(var source of this.dataA.uvit ){
+        this.source_idx.add(source.id);
+      }
+      for(var source of this.dataA.sxt ){
+        this.source_idx.add(source.id);
+      }
+      for(var source of this.dataA.laxpc ){
+        this.source_idx.add(source.id);
+      }
+      for(var idx of this.source_idx){
+        //console.log(idx);
+        
+       
+
+        this.visibility_array[Number(idx)] = {
+          vis_uvit : true,
+          vis_laxpc : true,
+          vis_czti : true,
+          vis_sxt : true
+        };
+      }
+      console.log(this.visibility_array);
+      this.FILL();
+    }
 
     /** Whether the number of selected elements matches the total number of rows. */
     isAllSelected() {
@@ -104,7 +159,9 @@ export class ObjectComponent implements OnInit {
       return "others";
     }
 
-
+    check(): boolean{
+        return false;
+    }
      
       public toggleText(event, id) { 
   
@@ -152,5 +209,82 @@ export class ObjectComponent implements OnInit {
                 buttonText.innerHTML = "Show Less"; 
             } 
         } 
+
+        public toggleAbs(event, id) { 
+          var points =  
+              document.getElementById("points_abs"+String(id)); 
+          var showMoreText = 
+              document.getElementById("moreText_abs"+String(id)); 
+          var buttonText = 
+              document.getElementById("textButton_abs"+String(id)); 
+          if (points.style.display === "none") { 
+              showMoreText.style.display = "none";
+              points.style.display = "inline"; 
+              buttonText.innerHTML = "Show More"; 
+          } 
+ 
+          else {
+              showMoreText.style.display = "inline";
+              points.style.display = "none"; 
+              buttonText.innerHTML = "Show Less"; 
+          } 
+      }
+      public FILL(){  
+          for(var idx in this.source_idx){
+            var points =  
+              document.getElementById("CZTI"+String(idx)); 
+              if(this.visibility_array[idx].vis_czti){
+                points.innerHTML = "Show More"; 
+              }
+              if(this.visibility_array[idx].vis_sxt){
+                points.innerHTML = "Show More"; 
+              }
+              if(this.visibility_array[idx].vis_uvit){
+                points.innerHTML = "Show More"; 
+              }
+              if(this.visibility_array[idx].vis_laxpc){
+                points.innerHTML = "Show More"; 
+              }
+          }
+      }
+      public toggleAuthor(event, id) { 
+        var points =  
+            document.getElementById("points_a"+String(id)); 
+        var showMoreText = 
+            document.getElementById("moreText_a"+String(id)); 
+        var buttonText = 
+            document.getElementById("textButton_a"+String(id)); 
+        if (points.style.display === "none") { 
+            showMoreText.style.display = "none";
+            points.style.display = "inline"; 
+            buttonText.innerHTML = "Show More"; 
+        } 
+
+        else {
+            showMoreText.style.display = "inline";
+            points.style.display = "none"; 
+            buttonText.innerHTML = "Show Less"; 
+        } 
+    }
+
+    public toggleK(event, id) { 
+      var points =  
+          document.getElementById("points_k"+String(id)); 
+      var showMoreText = 
+          document.getElementById("moreText_k"+String(id)); 
+      var buttonText = 
+          document.getElementById("textButton_k"+String(id)); 
+      if (points.style.display === "none") { 
+          showMoreText.style.display = "none";
+          points.style.display = "inline"; 
+          buttonText.innerHTML = "Show More"; 
+      } 
+
+      else {
+          showMoreText.style.display = "inline";
+          points.style.display = "none"; 
+          buttonText.innerHTML = "Show Less"; 
+      } 
+  }
    
 }

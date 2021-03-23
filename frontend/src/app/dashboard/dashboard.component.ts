@@ -34,14 +34,15 @@ export class DashboardComponent implements OnInit {
     this.server.get('/api/list/').subscribe(
       response => {
         for (var i = 0; i < response.sources.length; ++i) {
-          if (response.sources[i].category === "lmxb")
+          if (response.sources[i].Class === "lmxb")
             this.lmxb.push(response.sources[i]);
-          if (response.sources[i].category == 'hmxb')
+          if (response.sources[i].Class == 'hmxb')
             this.hmxb.push(response.sources[i]);
         }
         this.update();
         this.mollweide();
         console.log("Done");
+        console.log(response);
       },
       error => {
         console.log(error);

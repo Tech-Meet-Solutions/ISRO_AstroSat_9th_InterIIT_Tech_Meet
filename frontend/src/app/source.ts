@@ -11,14 +11,26 @@ export interface Source {
 export interface SourceA {
   id: number;
   Name: string;
+  Type: string;
   RA: number;
   Dec: number;
-  isObserved_uvit: boolean;
-  isObserved_laxpc: boolean;
-  isObserved_czti: boolean;
-  isObserved_sxt: boolean;
-  Publications: any;
-  category: string;
+  Opt: string;
+  r_Opt:string;
+  Vmag:string;
+  B_V:string;
+  U_B:string;
+  E_BV:string;
+  r_Vmag:string;
+  Fx:string;
+  Range:string;
+  Porb:string;
+  Ppulse:string;
+  r_Ppulse:string;
+  Cat:string;
+  SpType:string;
+  Class:string;
+  publications: any;
+  
   uvit:any;
   sxt:any;
   laxpc:any;
@@ -27,8 +39,31 @@ export interface SourceA {
 
 export interface SourceB {
   id: number;
-  Name: string;
+  Object: string;
+  obsid:string;
   RA: number;
   Dec: number;
-  category: string;
+  instrument: string;
+  date_time:string;
+  proposal_id:string;
+  target_id:string;
+  observer:string;
+  abstract:string;
+}
+
+export interface Paper {
+  identifier:number;
+  Name :string;
+  Authors : string;
+  Bib : string;
+  Keywords : string;
+  Abstract : string;
+}
+
+export interface Source_Visibility {
+  
+  vis_uvit : boolean;
+  vis_laxpc : boolean;
+  vis_czti : boolean;
+  vis_sxt : boolean;
 }

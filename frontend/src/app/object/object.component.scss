@@ -1,23 +1,28 @@
-
+.div-table{
+    padding:20px;
+    border: 20 px solid red;
+    margin-bottom: 100px;
+}
 
 table {
-    width: 90%;
+    width: 98%;
     border:20px;
     margin:auto;
+    
   }
   
 
-.laxpc, .czti, .uvit, .others, .sxt{
+/*.laxpc, .czti, .uvit, .others, .sxt{
     color:rgba(0,0,0,.54);
     font-size: 12px;
     font-weight: 500;
     border-style: solid;
   
     
-    border-width: 1px; border-color: rgb(160,160,255);
+    border-width: 10px; border-color: rgb(160,160,255);
     border-left: none;
     border-top: none;
-    border-right: none;
+    //border-right: none;
 }
   .laxpc{
     background-color: #075239;
@@ -34,15 +39,33 @@ table {
 .others{
     background-color:#f23fff;
 }
-#name{
-    padding-left:24px;
+*/
+#paper-table-cell, #name, #head-cell{
+    padding:5px;
+    text-align: center;
 }
 
 .mat-column-abstract, #abstract{
     word-wrap: break-word;
-    max-width: 100px;
+    max-width: 400px;
 }
 
+.mat-column-Abstract, #Abstract{
+    word-wrap: break-word;
+    max-width: 1000px;
+}
+
+.mat-column-observer{
+    word-wrap: break-word;
+    max-width: 80px;
+}
+
+
+td, th{
+    border-right-width:  1px;
+    border-right-style: solid;
+    border-right-color: rgba(0,0,0,.12);
+}
 button{
     background-color: Transparent;
     background-repeat:no-repeat;
