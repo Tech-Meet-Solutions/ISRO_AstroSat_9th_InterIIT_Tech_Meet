@@ -3,6 +3,27 @@ import numpy as np
 import sqlite3
 import json
 import sys
+
+dummy_abstract = '''
+            loremlorem Lorem ipsum dolor sit amet consectetur adipisicing elit
+            . Modi a consectetur facilis facere hic quidem atque ullam
+             culpa, dolor sint, aspernatur repellat nobis, vitae tempora quia.
+              Facilis quo tenetur quibusdam.lorem Lorem ipsum dolor sit amet 
+              consectetur adipisicing elit. Modi a consectetur facilis facere hic quidem 
+              atque ullam culpa, dolor sint, aspernatur repellat nobis, vitae tempora quia.
+              Facilis quo tenetur quibusdam.lorem Lorem ipsum dolor sit amet consectetur
+               adipisicing elit. Modi a consectetur facilis facere hic quidem atque ullam 
+               culpa, dolor sint, aspernatur repellat nobis, vitae tempora quia. Facilis quo
+                tenetur quibusdam.lorem Lorem ipsum dolor sit amet consectetur adipisicing 
+                elit. Modi a consectetur facilis facere hic quidem atque ullam culpa, dolor
+                 sint, aspernatur
+             repellat nobis, vitae tempora quia. Facilis quo tenetur quibusdam. 
+
+'''
+
+
+
+
 def Round(a):
     return float(np.round(float(a), 4))
 
@@ -10,6 +31,59 @@ def convert_bool(a):
     if a=="True":
         return True
     return False
+
+
+## Make a set of refs which are referred to by any source in either hm
+lmxb=set()
+hmxb=set()
+with open("summaryA.csv") as file1:
+    csv_reader = csv.DictReader(file1)
+    for row in csv_reader:
+        if row["class"] =="lmxb":
+            
+            for i in row["r_Opt"].split(','):
+                if i =="":
+                    continue
+                lmxb.add(i)
+            for i in row["r_Fx"].split(','):
+                if i =="":
+                    continue
+                lmxb.add(i)
+            for i in row["r_Vmag"].split(','):
+                if i =="":
+                    continue
+                lmxb.add(i)
+            for i in row["r_Ppulse"].split(','):
+                if i =="":
+                    continue
+                lmxb.add(i)
+
+        elif row["class"] =="hmxb":
+            
+            for i in row["r_Opt"].split(','):
+                if i =="":
+                    continue
+                hmxb.add(i)
+            for i in row["r_Fx"].split(','):
+                if i =="":
+                    continue
+                hmxb.add(i)
+            for i in row["r_Vmag"].split(','):
+                if i =="":
+                    continue
+                hmxb.add(i)
+            for i in row["r_Ppulse"].split(','):
+                if i =="":
+                    continue
+                hmxb.add(i)
+        else:
+            print("UNKNOWN SOURCE")
+            
+
+with open("hmxbrefs.csv") as hmxbref_file:
+    use numpy to select only those rows  which have 
+##
+
 with open('data/publications.csv', 'r') as fin:
     dr = csv.DictReader(fin)
     to_db_pub = [(i['ID'], i['TITLE'], i['URL']) for i in dr]
@@ -19,8 +93,10 @@ src_pub = []
 with open('data/summaryB.csv', 'r') as fin:
     dr = csv.DictReader(fin)
     len_cat_B = 0
-    to_db_src_B = [(i['idx'], str(i['name']), Round(i['ra']), Round(i['dec']), str(i['ins'])) for i in dr]
-
+    to_db_src_B = [(i['idx'], str(i['object']),str(i['obsid']), Round(i['ra']), Round(i['dec']), str(i['ins']), 
+                    str(i['date_time']),str(i['proposal_id']),str(i['target_id']),"Observer_Name",dummy_abstract)
+                    for i in dr]
+                            
 
 # To fill db with catalog A sources
 
@@ -35,7 +111,7 @@ with open('data/summaryA.csv', 'r') as fA:
     l1=[]
     
     dr = csv.DictReader(fA)
-    l1 = [ (i['Id'], str(i['Name']), i['RA'], i['DE'], str(i['class'])) for i in dr]
+    l1 = [ (i['Id'], str(i['Name']), Round(i['RA']), Round(i['DE']), str(i['class'])) for i in dr]
     
 with open('data/observed_A.csv','r') as f_obs:
     l2 = []
@@ -55,45 +131,46 @@ for i in zip(l1,l2):
 with open('data/observed_A_full.txt') as json_file:
     data = json.load(json_file)
     # dictionaries
-    uvit = data['uvit']
-    laxpc = data['laxpc']
-    czti = data['czti']
-    sxt = data['sxt']
+    #uvit = data['uvit']
+    #laxpc = data['laxpc']
+    #czti = data['czti']
+    #sxt = data['sxt']
 
 
-obs_lax = []
-obs_sx = []
-obs_cz = []
-obs_uv = []
+
+obs_common = []
+
+for src_A in data:
+    for src_B in data[src_A]:
+        obs_common(int(src_A), src_B)
+
+#for val in l2:
+#    uv = val[0]
+#    sx = val[1]
+#    lax = val[2]
+#    cz = val[3]
+#    id_src = val[4]
+#    if (uv=='True'):
+#        c = uvit[str(id_src)]
+#        for src_B in c:
+#            obs_common.add((id_src,src_B))
+#    if (cz=='True'):
+#        c = czti[str(id_src)]
+#        for src_B in c:
+#            obs_common.add((id_src,src_B))
+#    if (lax=='True'):
+#        c = laxpc[str(id_src)]
+#        for src_B in c:
+#            obs_common.add((id_src,src_B))
+#    if (sx=='True'):
+#        c = sxt[str(id_src)]
+#        for src_B in c:
+#            obs_common.add((id_src,src_B))
 
 
-for val in l2:
-    uv = val[0]
-    sx = val[1]
-    lax = val[2]
-    cz = val[3]
-    id_src = val[4]
-    if (uv=='True'):
-        c = uvit[str(id_src)]
-        for src_B in c:
-            obs_uv.append((id_src,src_B))
-    if (cz=='True'):
-        c = czti[str(id_src)]
-        for src_B in c:
-            obs_cz.append((id_src,src_B))
-    if (lax=='True'):
-        c = laxpc[str(id_src)]
-        for src_B in c:
-            obs_lax.append((id_src,src_B))
-    if (sx=='True'):
-        c = sxt[str(id_src)]
-        for src_B in c:
-            obs_sx.append((id_src,src_B))
-
-
-    
-
-#sys.exit(0)
+obs_common = list(obs_common)
+print(obs_common)
+sys.exit(0)
 
 con = sqlite3.connect('db.sqlite3')
 cursor = con.cursor()
@@ -116,7 +193,7 @@ except Exception as error:
 
 # insert catalog B data to db
 try:
-    cursor.executemany("INSERT INTO source_sourceb(id, Name,RA,Dec,category) VALUES(?,?,?,?,?)", to_db_src_B)
+    cursor.executemany("INSERT INTO source_sourceb(id,Object,obsid,RA,Dec,category,date_time,proposal_id,target_id,observer,abstract) VALUES(?,?,?,?,?)", to_db_src_B)
     con.commit()
 except Exception as error:
     print(error)
