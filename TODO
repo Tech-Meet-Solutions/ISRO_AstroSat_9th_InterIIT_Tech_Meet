@@ -3,6 +3,7 @@ Mollweide
 line width dec - Done
 try transparency, don't change marker size - Done, added border as well
 disable click on extra line - Not possible, seems useful tbh
+Add another mollweide for LAT LONG
 
 Aladin
 Add Name the catalogs - Done
