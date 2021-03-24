@@ -100,7 +100,18 @@ with open('data/publications.csv', 'r') as fin:
     dr = csv.DictReader(fin)
     to_db_pub = [(i['ID'], i['TITLE'], i['URL'], "","","") for i in dr]
 
+# sourceA -paper mapping tuple 
 src_pub = []
+with open('data/summaryA.csv') as f:
+    dr = csv.DictReader(f)
+    for row in dr:
+        if row['Papers']=="":
+            continue
+        for ppr_id in row['Papers'].split(','):
+            src_pub.append((int(row['Id']),int(ppr_id.strip())))
+
+
+
 # To fill db with catalog B sources
 with open('data/summaryB.csv', 'r') as fin:
     dr = csv.DictReader(fin)
@@ -250,10 +261,8 @@ except Exception as error:
 
 # insert catalog B source and publication data to db
 for entry in src_pub:
-    if entry[1][0] == "-":
-        continue
     try:
-        cursor.execute("INSERT INTO source_source_Publications(source_id,publication_id) VALUES(?,?)", entry)
+        cursor.execute("INSERT INTO source_sourcea_Publications(sourcea_id,publication_id) VALUES(?,?)", entry)
         con.commit()
     except Exception as error:
         print(error)

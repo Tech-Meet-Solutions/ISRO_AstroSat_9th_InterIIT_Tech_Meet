@@ -80,13 +80,19 @@ def get_source_info(request, pk):
                 refs.add(i)
         refs_list = []
         for ref in refs:
-            r = Refs.objects.get(id=ref + "_" + source.Class)
-            refs_list.append({
-                "id": r.id[:-5],
-                "bib": r.bib,
-                "Name": r.Name,
-                "desc": r.desc
-            })
+            ref_id = ref + "_" + source.Class
+            try:
+                r = Refs.objects.get(id=ref_id)
+                refs_list.append({
+                    "id": r.id[:-5],
+                    "bib": r.bib,
+                    "Name": r.Name,
+                    "desc": r.desc
+                })
+            except Refs.DoesNotExist:
+                pass
+            
+           
 
         data["refs"] = refs_list
 

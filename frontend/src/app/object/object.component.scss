@@ -183,9 +183,15 @@ table {
   width: 100%;
 }
 
-#div-table-papers,
-#div-table-sources {}
-
+.mat-column-Title{
+    max-width:100px;
+}
+.mat-column-Authors{
+    max-width: 70px;
+}
+.mat-column-Keywords{
+    max-width: 70px;
+}
 #paper-table-cell,
 #name,
 #head-cell {
