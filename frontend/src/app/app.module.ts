@@ -42,7 +42,6 @@ import { MatButtonModule } from '@angular/material/button';
     MatCardModule,
     MatSortModule,
     MatButtonModule,
-    SelectionModel
   ],
   providers: [],
   bootstrap: [AppComponent]
