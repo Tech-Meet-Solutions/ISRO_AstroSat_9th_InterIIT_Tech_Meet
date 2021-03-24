@@ -17,7 +17,7 @@ export class DashboardComponent implements OnInit {
   plot: any;
 
   constructor(
-    private server: ServerService,
+    private server: ServerService
   ) {
     this.lmxb = Array<Source>();
     this.hmxb = Array<Source>();
@@ -111,7 +111,7 @@ export class DashboardComponent implements OnInit {
             Name: this.lmxb[i].Name,
             RA: this.lmxb[i].RA,
             Dec: this.lmxb[i].Dec,
-            '': `<a target="_blank" href="${window.location.href.slice(0, -2)}index.html#/object/${this.lmxb[i].id}">More Info</a><br><a target="_blank" href="http://simbad.u-strasbg.fr/simbad/sim-id?output.format=HTML&Ident=${this.lmxb[i].Name.replace('+', '%2B')}">Simbad</a>`
+            '': `<a target="_blank" href="/object/${this.lmxb[i].id}">More Info</a><br><a target="_blank" href="http://simbad.u-strasbg.fr/simbad/sim-id?output.format=HTML&Ident=${this.lmxb[i].Name.replace('+', '%2B')}">Simbad</a>`
           }
         )
       );
@@ -125,7 +125,7 @@ export class DashboardComponent implements OnInit {
             Name: this.hmxb[i].Name,
             RA: this.hmxb[i].RA,
             Dec: this.hmxb[i].Dec,
-            '': `<a target="_blank" href="${window.location.href.slice(0, -2)}index.html#/object/${this.hmxb[i].id}">More Info</a><br><a target="_blank" href="http://simbad.u-strasbg.fr/simbad/sim-id?output.format=HTML&Ident=${this.hmxb[i].Name.replace('+', '%2B')}">Simbad</a>`
+            '': `<a target="_blank" href="/object/${this.hmxb[i].id}">More Info</a><br><a target="_blank" href="http://simbad.u-strasbg.fr/simbad/sim-id?output.format=HTML&Ident=${this.hmxb[i].Name.replace('+', '%2B')}">Simbad</a>`
           }
         )
       );
