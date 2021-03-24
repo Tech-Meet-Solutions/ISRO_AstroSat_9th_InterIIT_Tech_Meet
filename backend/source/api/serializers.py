@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from source.models import Publication, SourceA, SourceB, Refs
 
+
 class DynamicFieldsModelSerializer(serializers.ModelSerializer):
     """
     A ModelSerializer that takes an additional `fields` argument that
@@ -22,8 +23,6 @@ class DynamicFieldsModelSerializer(serializers.ModelSerializer):
                 self.fields.pop(field_name)
 
 
-
-
 class PublicationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Publication
@@ -38,33 +37,35 @@ class PublicationSerializer(serializers.ModelSerializer):
 class RefsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Refs
-       
+
         fields = ('id',
                   'bib',
                   'Name',
                   'desc')
 
+
 class SourceBSerializer(serializers.ModelSerializer):
     class Meta:
         model = SourceB
-       
+
         fields = ('id',
-                'Object',
-                'obsid',
-                'RA',
-                'Dec',
-                'instrument',
-                'date_time',
-                'proposal_id',
-                'target_id',
-                'observer',
-                'abstract'
+                  'Object',
+                  'obsid',
+                  'RA',
+                  'Dec',
+                  'instrument',
+                  'date_time',
+                  'proposal_id',
+                  'target_id',
+                  'observer',
+                  'abstract'
                   )
+
 
 class SourceASerializer(DynamicFieldsModelSerializer):
     class Meta:
         model = SourceA
-       
+
         fields = ('id',
                   'Name',
                   'Type',
@@ -83,7 +84,7 @@ class SourceASerializer(DynamicFieldsModelSerializer):
                   'Range',
                   'r_Fx',
                   'Porb',
-                   'Porb2',
+                  'Porb2',
                   'Ppulse',
                   'r_Ppulse',
                   'Cat',
@@ -99,5 +100,3 @@ class SourceASerializer(DynamicFieldsModelSerializer):
                   'czti',
                   'Publications'
                   )
-
-

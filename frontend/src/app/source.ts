@@ -1,11 +1,16 @@
 export interface Source {
   id: number;
   Name: string;
+  Type: string;
   RA: number;
   Dec: number;
-  isObserved: boolean;
-  Publications: any;
-  category: string;
+  GLON: number;
+  GLAT: number;
+  Class: string;
+  isObserved_uvit: boolean;
+  isObserved_sxt: boolean;
+  isObserved_laxpc: boolean;
+  isObserved_czti:boolean;
 }
 
 export interface SourceA {

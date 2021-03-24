@@ -15,6 +15,7 @@ export class DashboardComponent implements OnInit {
   hmxb: Array<Source>;
   aladin: any;
   plot: any;
+  mollweide_lat_long: boolean;
 
   constructor(
     private server: ServerService
@@ -33,6 +34,7 @@ export class DashboardComponent implements OnInit {
     this.aladin.getBaseImageLayer().getColorMap().update('grayscale');
     this.server.get('/api/list/').subscribe(
       response => {
+        console.log(response.sources)
         for (var i = 0; i < response.sources.length; ++i) {
           if (response.sources[i].Class === "lmxb")
             this.lmxb.push(response.sources[i]);
@@ -48,6 +50,7 @@ export class DashboardComponent implements OnInit {
         console.log(error);
       }
     );
+    this.mollweide_lat_long = true;
     this.plot.layout = {
       title: 'Mollweide',
       autosize: true,

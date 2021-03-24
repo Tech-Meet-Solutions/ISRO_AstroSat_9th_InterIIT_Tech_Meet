@@ -67,3 +67,29 @@ Authors - textfield
 Bibliographic Code - string
 Keywords - textfield
 Abstract - textfield
+montserrat
+open sans
+pictures to top
+
+Equatorial Coordinates (RA/Dec, J2000)
+put + for dec
+z-type to z-source
+no comma, next line
+
+flux: 450.0
+orbital : delete 
+cat - new lines
+optical counterpar : 
+photometry: 
+
+reference peach color - no bullet - large font
+
+no publications last
+
+list of sources - astrosat obsv.
+
+increase height of name title
+
+no green - black/grey
+
+show more/less

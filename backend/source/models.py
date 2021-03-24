@@ -10,18 +10,16 @@ class Publication(models.Model):
     Keywords = models.TextField(default="")
     Abstract = models.TextField(default="")
 
-
     def __str__(self):
         return self.Name
 
 
 # reference class for the hmxb, lmxb references
 class Refs(models.Model):
-    id = models.CharField(max_length=50,default="", primary_key=True) # actual_id in [hl]mxb + [hl]mxb
-    bib = models.CharField(max_length=50,default="")
+    id = models.CharField(max_length=50, default="", primary_key=True)  # actual_id in [hl]mxb + [hl]mxb
+    bib = models.CharField(max_length=50, default="")
     Name = models.CharField(max_length=100)
     desc = models.CharField(max_length=500)
-
 
 
 class SourceB(models.Model):
@@ -40,9 +38,6 @@ class SourceB(models.Model):
 
     def __str__(self):
         return self.Object
-
-
-
 
 
 class SourceA(models.Model):
@@ -72,21 +67,16 @@ class SourceA(models.Model):
     SpType = models.CharField(max_length=100)
     Class = models.CharField(max_length=100)  # lmxb or hmxb
 
-
-
-
     isObserved_uvit = models.BooleanField(default=False)
     isObserved_sxt = models.BooleanField(default=False)
     isObserved_laxpc = models.BooleanField(default=False)
-    isObserved_czti = models.BooleanField(default=False)  
-    uvit = models.ManyToManyField(SourceB,related_name = 'UV')
-    sxt = models.ManyToManyField(SourceB,related_name='XT')
-    laxpc = models.ManyToManyField(SourceB,related_name='PC')
-    czti = models.ManyToManyField(SourceB,related_name='CZ')
+    isObserved_czti = models.BooleanField(default=False)
+    uvit = models.ManyToManyField(SourceB, related_name='UV')
+    sxt = models.ManyToManyField(SourceB, related_name='XT')
+    laxpc = models.ManyToManyField(SourceB, related_name='PC')
+    czti = models.ManyToManyField(SourceB, related_name='CZ')
 
     Publications = models.ManyToManyField(Publication)
-    
+
     def __str__(self):
         return self.Name
-
-
