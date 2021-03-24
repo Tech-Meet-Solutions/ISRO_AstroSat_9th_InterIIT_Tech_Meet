@@ -28,7 +28,7 @@ export class ObjectComponent implements OnInit,AfterViewInit {
   selection = new SelectionModel<SourceB>(true, []);
   visibility_array : { [id : number ] : Source_Visibility} ;
   selectionPaper = new SelectionModel<Paper>(true, []);
-  displayedColumns: string[] = [ 'select', 'Object','obsid','RA','Dec','instrument','date_time',
+  displayedColumns: string[] = [  'Object','obsid','RA','Dec','instrument','date_time',
                                 'proposal_id','target_id','observer','abstract','visibilility'];
   ColumnsPapers: string[] = ['Title', 'Authors','Keywords','Abstract'];
   sourceB_id_map = [];
@@ -70,6 +70,7 @@ export class ObjectComponent implements OnInit,AfterViewInit {
         this.fill_type_span();
         this.fill_refs();
         this.dataSourcePapers = new MatTableDataSource<Paper>(this.dataA.publications);
+        console.log(this.dataB);
       },
       error => {
         console.log(error);

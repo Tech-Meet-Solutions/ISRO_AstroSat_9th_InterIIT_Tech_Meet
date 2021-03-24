@@ -21,8 +21,24 @@ div{
     padding-left:20px;
     padding-bottom: 15px;;
     color: #FF6C6C;
-    font-weight: bold;
+    font-weight: 1000;
     
+}
+.pub-header-card{
+    margin:20px;
+}
+.mat-card-title{
+    padding:30px;
+    font-weight:2000;
+    //text-shadow:2px 2px #373636 ;
+}
+.box-tools{
+    color: #FF6C6C;
+    font-weight: 1000;
+    width:33.33%;
+    display: inline-block;
+    //text-align: center;
+    padding-left:50px;
 }
 #data-title{
     font-size: 1.08em;
@@ -34,6 +50,9 @@ div{
     display:inline-block;
     
     
+}
+li{
+    list-style: none;;
 }
 .div-pictures{
     padding-left:30px;
@@ -54,7 +73,8 @@ div{
     display:inline-block;
 }
 #data-val{
-    color: #888CFF;
+    color:  whitesmoke;
+    font-weight: 400;;
 }
 .SDSS, .panstars{
     height:130px;
@@ -68,21 +88,21 @@ div{
    border:none;
     display: inline-block;
 }
-.box-tools{
-    width:33.33%;
-    display: inline-block;
+
+.div-xray .data-title{
+    padding:1000px;
 }
 
 #source-A-info{
     background-image: url("../../assets/static/space2.jpg");
-    height:500px;
+    height:600px;
     border-radius: 0px;
     color:whitesmoke;
     position: relative;
     
 }
 a{
-    color:red;
+    color:#FF6C6C;;
 }
 
 .mat-list-item {
@@ -101,7 +121,7 @@ a{
     padding-left:20px;
     padding-right:20px;
     //padding-bottom:20px;
-    background-color: seagreen;
+    background-color: #373636;
 }
 #pub-table, #sources-table{
     //width:98%;
@@ -110,7 +130,7 @@ a{
     padding-left:20px;
     padding-right:20px;
     padding-bottom:20px;
-    background-color: seagreen;
+    background-color: #373636;
 }
 #pub-header-card, #sources-header-card{
     box-shadow: none;
@@ -174,3 +194,25 @@ button{
     font-size: 12px;
     font-weight: 500;
 }
+
+@media only screen and (max-width: 699 ) {
+    #source-A-info{
+        background-image: url("../../assets/static/space2.jpg");
+        height:1000px;
+        border-radius: 0px;
+        color:whitesmoke;
+        position: relative;
+        
+    }
+  }
+
+  @media only screen and (min-width: 700 ) and ( max-width: 1000px) {
+    #source-A-info{
+        background-image: url("../../assets/static/space2.jpg");
+        height:800px;
+        border-radius: 0px;
+        color:whitesmoke;
+        position: relative;
+        
+    }
+  }
