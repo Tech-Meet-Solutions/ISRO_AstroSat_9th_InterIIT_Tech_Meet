@@ -98,7 +98,7 @@ hmxb_to_add = hmxb_to_add+lmxb_to_add
 
 with open('data/publications.csv', 'r') as fin:
     dr = csv.DictReader(fin)
-    to_db_pub = [(i['ID'], i['TITLE'], i['URL'], "","","") for i in dr]
+    to_db_pub = [(i['Idx'], i['Title'], i['Keywords'],i['Abstract'],i['Bib'],i['Authors']) for i in dr]
 
 # sourceA -paper mapping tuple 
 src_pub = []
@@ -201,7 +201,7 @@ cursor = con.cursor()
 
 # insert publication data to db
 try:
-    cursor.executemany("INSERT INTO source_publication(identifier,Name,Bib,Authors,Keywords,Abstract) VALUES(?,?,?,?,?,?)", to_db_pub)
+    cursor.executemany("INSERT INTO source_publication(identifier,Name,Keywords,Abstract,Bib,Authors) VALUES(?,?,?,?,?,?)", to_db_pub)
     con.commit()
 except Exception as error:
     print(error)
