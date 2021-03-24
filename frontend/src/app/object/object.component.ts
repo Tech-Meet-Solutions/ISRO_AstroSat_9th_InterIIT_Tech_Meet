@@ -30,8 +30,8 @@ export class ObjectComponent implements OnInit,AfterViewInit {
   selectionPaper = new SelectionModel<Paper>(true, []);
   displayedColumns: string[] = [ 'select', 'Object','obsid','RA','Dec','instrument','date_time',
                                 'proposal_id','target_id','observer','abstract','visibilility'];
-  ColumnsPapers: string[] = ['Title', 'Authors','Keywords','Abstract']
-
+  ColumnsPapers: string[] = ['Title', 'Authors','Keywords','Abstract'];
+  sourceB_id_map = [];
   aladin: any;
   constructor(
     private router: Router,
@@ -64,7 +64,7 @@ export class ObjectComponent implements OnInit,AfterViewInit {
         this.dataA = response;
         
         this.fill_visibility_array();
-        
+        //this.changeIdSourceB();
         this.dataSource.data = this.dataB;
         this.fill_cat_span();
         this.fill_type_span();
@@ -158,7 +158,7 @@ export class ObjectComponent implements OnInit,AfterViewInit {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
   }
     assignClass(category: string): string{
       if (category.substring(0,3)=="sxt"){
