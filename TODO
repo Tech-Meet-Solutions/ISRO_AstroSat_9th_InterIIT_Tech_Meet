@@ -10,13 +10,13 @@ Add Name the catalogs - Done
 
 Sidebar
 Reduce size of sidebar
-Fermi - grayscale
-SWIFT BAT FLUX - grayscale
-Galex - native
-DSS color - native
-Pan* color - native
-2MASS - native
-WISE - native
+Fermi - grayscale "P/Fermi/color"
+SWIFT BAT FLUX - grayscale "P/SWIFT_BAT_FLUX"
+Galex - native "P/GALEXGR6/AIS/color"
+DSS color - native "P/DSS2/color"
+Pan* color - native "P/PanSTARRS/DR1/color/z/zg/g"
+2MASS - native "P/2MASS/color"
+WISE - native "P/allWISE/color"
 
 Legend
 checkbox for instruments (special fill)

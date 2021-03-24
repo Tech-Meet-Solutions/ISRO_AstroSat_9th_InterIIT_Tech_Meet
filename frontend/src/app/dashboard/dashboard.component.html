@@ -1,11 +1,19 @@
 <mat-grid-list cols="14">
-  <mat-grid-tile colspan="2">
-    <button></button>
+  <mat-grid-tile colspan="2" style="height: 70vh;">
+    <button mat-raised-button (click)="update_survey('P/Fermi/color', false)">Fermi Survey</button><br>
+    <button mat-raised-button (click)="update_survey('P/SWIFT_BAT_FLUX', false)">SWIFT BAT FLUX</button><br>
+    <button mat-raised-button (click)="update_survey('P/GALEXGR6/AIS/color')">Galex</button><br>
+    <button mat-raised-button (click)="update_survey('P/DSS2/color')">DSS color</button><br>
+    <button mat-raised-button (click)="update_survey('P/PanSTARRS/DR1/color/z/zg/g')">Pan* color</button><br>
+    <button mat-raised-button (click)="update_survey('P/2MASS/color')">2MASS</button><br>
+    <button mat-raised-button (click)="update_survey('P/allWISE/color')">WISE</button><br>
   </mat-grid-tile>
   <mat-grid-tile colspan="7" style="height: 70vh;">
     <div id="aladin-lite-div" style="width:100%; height:100%;"></div>
   </mat-grid-tile>
   <mat-grid-tile colspan="5" style="height: 80vh;">
-    <plotly-plot style="width: 100%; height: 100%;" [data]="plot.data" [layout]="plot.layout" [config]="plot.config" (plotlyClick)=click_plot($event)></plotly-plot>
+    <plotly-plot style="width: 100%; height: 100%;" [data]="plot.data" [layout]="plot.layout" [config]="plot.config"
+      (plotlyClick)=click_plot($event)></plotly-plot>
+    <button mat-raised-button (click)="moll_switch()">{{ moll_button_title }}</button><br>
   </mat-grid-tile>
 </mat-grid-list>
