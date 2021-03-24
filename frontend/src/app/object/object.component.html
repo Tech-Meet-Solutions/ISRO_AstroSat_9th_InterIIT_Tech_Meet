@@ -80,15 +80,16 @@
         <div class=div-pictures>
           <a
             href="http://skyserver.sdss.org/dr16/en/tools/chart/navi.aspx?opt=G&ra={{dataA.RA}}&dec={{dataA.Dec}}&scale=0.1981"><img
-              class=SDSS src="../../assets/static/SDSS.jpeg" alt=""></a>
+              class=SDSS src="../../assets/static/SDSS.jpeg"  alt="alternative text" title="Link to SDSS Navigate Tool"></a>
+              
           <a
             href="http://ps1images.stsci.edu/cgi-bin/ps1cutouts?pos={{dataA.RA}}{{dataA.Dec}}&filter=color&filetypes=stack&auxiliary=data&size=240&output_size=0&verbose=0&autoscale=99.500000&catlist="><img
-              class=panstars src="../../assets/static/panstars.jpeg" alt=""></a>
-          <div id="aladin-lite-div">
+              class=panstars src="../../assets/static/panstars.jpeg" alt="alternative text" title="Link to PanSTARRS-1"></a>
+          <!--<div id="aladin-lite-div">
             <a
               href="http://skyserver.sdss.org/dr16/en/tools/chart/navi.aspx?opt=G&ra={{dataA.RA}}&dec={{dataA.Dec}}&scale=0.1981"><img
                 class=SDSS src="../../assets/static/SDSS.jpeg" alt=""></a>
-          </div>
+          </div>-->
         </div>
         <div class="box-tools">
           <a
@@ -133,9 +134,9 @@
       <ng-container matColumnDef="Authors">
         <th mat-header-cell id=head-cell *matHeaderCellDef> Authors </th>
         <td mat-cell id="paper-table-cell" *matCellDef="let element">
-          {{element.Authors.substring(0,10)}}
+          {{element.Authors.substring(0,40)}}
           <span id="points_a{{element.identifier}}">...</span>
-          <span style="display: none" id="moreText_a{{element.identifier}}"> {{element.Authors.substring(10)}} </span>
+          <span style="display: none" id="moreText_a{{element.identifier}}"> {{element.Authors.substring(40)}} </span>
           <button class="text-toogle-btn" (click)="toggleAuthor(this, element.identifier)"
             id="textButton_a{{element.identifier}}">
             Show More
@@ -147,9 +148,9 @@
       <ng-container matColumnDef="Abstract">
         <th mat-header-cell id=head-cell *matHeaderCellDef> Abstract </th>
         <td mat-cell id="paper-table-cell" *matCellDef="let element">
-          {{element.Abstract.substring(0,300)}}
+          {{element.Abstract.substring(0,500)}}
           <span id="points_abs{{element.identifier}}">...</span>
-          <span style="display: none" id="moreText_abs{{element.identifier}}"> {{element.Abstract.substring(300)}}
+          <span style="display: none" id="moreText_abs{{element.identifier}}"> {{element.Abstract.substring(500)}}
           </span>
           <button class="text-toogle-btn" (click)="toggleAbs(this, element.identifier)"
             id="textButton_abs{{element.identifier}}">
@@ -163,9 +164,9 @@
         <th mat-header-cell id=head-cell *matHeaderCellDef> Keywords </th>
         <td mat-cell id="paper-table-cell" *matCellDef="let element">
 
-          {{element.Keywords.substring(0,50)}}
+          {{element.Keywords.substring(0,200)}}
           <span id="points_k{{element.identifier}}">...</span>
-          <span style="display: none" id="moreText_k{{element.identifier}}"> {{element.Keywords.substring(50)}} </span>
+          <span style="display: none" id="moreText_k{{element.identifier}}"> {{element.Keywords.substring(200)}} </span>
           <button class="text-toogle-btn" (click)="toggleK(this, element.identifier)"
             id="textButton_k{{element.identifier}}">
             Show More
