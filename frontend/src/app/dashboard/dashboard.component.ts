@@ -87,26 +87,14 @@ export class DashboardComponent implements OnInit {
     this.plot.config = {
       displaylogo: false,
       modeBarButtonsToRemove: [
-        'toImage',
-        // 'zoom2d',
+        // 'toImage',
         'pan2d',
         'select2d',
         'lasso2d',
-        // 'zoomIn2d',
-        // 'zoomOut2d',
-        // 'autoScale2d',
-        // 'resetScale2d',
-        // 'zoomInGeo',
-        // 'zoomOutGeo',
+        'zoomInGeo',
+        'zoomOutGeo',
         'resetGeo',
         'hoverClosestGeo',
-        // 'hoverClosestGl2d',
-        // 'hoverClosestPie',
-        // 'toggleHover',
-        // 'resetViews',
-        // 'sendDataToCloud',
-        // 'toggleSpikelines',
-        // 'resetViewMapbox'
       ]
     };
   }
@@ -123,7 +111,7 @@ export class DashboardComponent implements OnInit {
             Name: this.lmxb[i].Name,
             RA: this.lmxb[i].RA,
             Dec: this.lmxb[i].Dec,
-            '': `<a target="_blank" href="/object/${this.lmxb[i].id}">More Info</a>`
+            '': `<a target="_blank" href="/object/${this.lmxb[i].id}">More Info</a><br><a target="_blank" href="http://simbad.u-strasbg.fr/simbad/sim-id?output.format=HTML&Ident=${this.lmxb[i].Name.replace('+', '%2B')}">Simbad</a>`
           }
         )
       );
@@ -137,13 +125,13 @@ export class DashboardComponent implements OnInit {
             Name: this.hmxb[i].Name,
             RA: this.hmxb[i].RA,
             Dec: this.hmxb[i].Dec,
-            '': `<a target="_blank" href="/object/${this.hmxb[i].id}">More Info</a>`
+            '': `<a target="_blank" href="/object/${this.hmxb[i].id}">More Info</a><br><a target="_blank" href="http://simbad.u-strasbg.fr/simbad/sim-id?output.format=HTML&Ident=${this.hmxb[i].Name.replace('+', '%2B')}">Simbad</a>`
           }
         )
       );
     }
-    var cat_lmxb = A.catalog({ name: 'lmxb', shape: 'circle', color: '#5d5', onClick: 'showPopup', sourceSize: 16 });
-    var cat_hmxb = A.catalog({ name: 'hmxb', shape: 'circle', color: '#f00', onClick: 'showPopup', sourceSize: 16 });
+    var cat_lmxb = A.catalog({ name: 'LMXB', shape: 'circle', color: '#5d5', onClick: 'showPopup', sourceSize: 16 });
+    var cat_hmxb = A.catalog({ name: 'HMXB', shape: 'circle', color: '#f00', onClick: 'showPopup', sourceSize: 16 });
     this.aladin.addCatalog(cat_lmxb);
     this.aladin.addCatalog(cat_hmxb);
     cat_lmxb.addSources(src_lmxb);

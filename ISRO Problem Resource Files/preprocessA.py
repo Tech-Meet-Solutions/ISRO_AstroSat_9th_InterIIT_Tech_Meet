@@ -2,7 +2,7 @@ import csv
 import os
 from astropy.io import ascii
 
-tab = ascii.read("Combined.dat", format='ecsv')
+tab = ascii.read("Catalog_A.dat")
 tab.write("combinedA.csv", format='csv', overwrite=True)
 to_include = ['Name','Type','RA','DE','GLON','GLAT','Opt','r_Opt',
 			  'Vmag','B-V','U-B','E(B-V)','r_Vmag','Fx','Range','r_Fx','Porb','Porb2',
