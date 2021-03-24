@@ -4,7 +4,7 @@ from rest_framework.decorators import api_view
 from django.core import serializers
 from django.http.response import JsonResponse
 
-from source.models import SourceA, SourceB
+from source.models import SourceA, SourceB, Refs
 from source.api.serializers import SourceASerializer,SourceBSerializer, PublicationSerializer
 from rest_framework.renderers import JSONRenderer
 
@@ -59,6 +59,31 @@ def get_source_info(request, pk):
         data['SpType'] = source.SpType
         data['Class'] = source.Class
         
+        refs = set()
+        # Preprocess refs data to send references
+        if not source.r_Opt=="":
+            for i in source.r_Opt.split(','):
+                refs.add(i)
+        if not source.r_Fx=="":
+            for i in source.r_Fx.split(','):
+                refs.add(i)
+        if not source.r_Vmag=="":
+            for i in source.r_Vmag.split(','):
+                refs.add(i)
+        if not source.r_Ppulse=="":
+            for i in source.r_Ppulse.split(','):
+                refs.add(i)
+        refs_list=[]
+        for ref in refs:
+            r = Refs.objects.get(id=ref+"_"+source.Class)
+            refs_list.append({
+                "id":r.id[:-5],
+                "bib":r.bib,
+                "Name":r.Name,
+                "desc":r.desc
+            })
+
+        data["refs"] = refs_list
         
         
         

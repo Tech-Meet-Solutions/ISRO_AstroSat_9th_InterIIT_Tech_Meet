@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ServerService } from '../server.service';
-import { SourceA, SourceB, Paper, Source_Visibility } from '../source';
+import { SourceA, SourceB, Paper, Source_Visibility, Refs } from '../source';
 import {SelectionModel} from '@angular/cdk/collections';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatListModule} from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
-import { map } from 'jquery';
+import {AfterViewInit, ViewChild} from '@angular/core';
+import {MatSort} from '@angular/material/sort';
+
 
 declare var A: any;
 
@@ -15,7 +17,7 @@ declare var A: any;
   templateUrl: './object.component.html',
   styleUrls: ['./object.component.scss']
 })
-export class ObjectComponent implements OnInit {
+export class ObjectComponent implements OnInit,AfterViewInit {
   myVar: number;
   id: string;
   dataA: SourceA;
@@ -26,7 +28,7 @@ export class ObjectComponent implements OnInit {
   selection = new SelectionModel<SourceB>(true, []);
   visibility_array : { [id : number ] : Source_Visibility} ;
   selectionPaper = new SelectionModel<Paper>(true, []);
-  displayedColumns: string[] = [  'Object','obsid','RA','Dec','instrument','date_time',
+  displayedColumns: string[] = [ 'select', 'Object','obsid','RA','Dec','instrument','date_time',
                                 'proposal_id','target_id','observer','abstract','visibilility'];
   ColumnsPapers: string[] = ['Title', 'Authors','Keywords','Abstract']
 
@@ -37,9 +39,9 @@ export class ObjectComponent implements OnInit {
     private server: ServerService
   ) {
     this.dataA = {
-      id: 0,Name : '',Type:'',RA: 0,Dec: 0,Opt:'',r_Opt:'',Vmag:'',B_V:'', U_B:'',E_BV:'', r_Vmag:'',Fx:'', Range:'', Porb:'',Ppulse:'',
+      id: 0,Name : '',Type:'',RA: 0,Dec: 0,Opt:'',r_Fx:'',r_Opt:'',Vmag:'',B_V:'', U_B:'',E_BV:'', r_Vmag:'',Fx:'', Range:'', Porb:'',Ppulse:'',
       r_Ppulse:'', Cat:'', SpType:'',Class:'', publications: Array<Paper>(),uvit:Array<SourceB>(),sxt:Array<SourceB>(), laxpc:Array<SourceB>(),
-      czti:Array<SourceB>()
+      czti:Array<SourceB>(),refs:Array<Refs>()
     };
     this.dataB = Array<SourceB>();
     this.visibility_array = {};
@@ -58,11 +60,15 @@ export class ObjectComponent implements OnInit {
     this.server.get(`/api/info/${this.id}`).subscribe(
       response => {
         this.myVar = 0;
+        console.log(response);
         this.dataA = response;
+        
         this.fill_visibility_array();
-        this.dataSource = new MatTableDataSource<SourceB>(this.dataB);
+        
+        this.dataSource.data = this.dataB;
         this.fill_cat_span();
         this.fill_type_span();
+        this.fill_refs();
         this.dataSourcePapers = new MatTableDataSource<Paper>(this.dataA.publications);
       },
       error => {
@@ -74,6 +80,11 @@ export class ObjectComponent implements OnInit {
 
   }
 
+  @ViewChild(MatSort) sort: MatSort;
+
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+  }
 
     fill_visibility_array(){
       console.log("inside vis func");
@@ -129,26 +140,26 @@ export class ObjectComponent implements OnInit {
     }
 
     /** Whether the number of selected elements matches the total number of rows. */
-    isAllSelected() {
-      const numSelected = this.selection.selected.length;
-      const numRows = this.dataSource.data.length;
-      return numSelected === numRows;
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+        this.selection.clear() :
+        this.dataSource.data.forEach(row => this.selection.select(row));
+  }
+
+  /** The label for the checkbox on the passed row */
+  checkboxLabel(row?: SourceB): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
-  
-    /** Selects all rows if they are not all selected; otherwise clear selection. */
-    masterToggle() {
-      this.isAllSelected() ?
-          this.selection.clear() :
-          this.dataSource.data.forEach(row => this.selection.select(row));
-    }
-  
-    /** The label for the checkbox on the passed row */
-    checkboxLabel(row?: SourceB): string {
-      if (!row) {
-        return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
-      }
-      return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
-    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+  }
     assignClass(category: string): string{
       if (category.substring(0,3)=="sxt"){
         return "sxt";
@@ -352,5 +363,49 @@ export class ObjectComponent implements OnInit {
       console.log(this.dataA.Type);
       this.dataA.Type = type_verbose.substring(0,type_verbose.length-2);
    }
-   
+   public fill_refs(){
+     //r_Opt r_Ppulse r_Fx r_Vmag
+     var mapping = {};
+     var count = 1;
+     for(let ref of this.dataA.refs){
+      mapping[ref.id] = count;
+      count+=1;
+     }
+     var splitted = this.dataA.r_Opt.split(",");
+     var mapped_to = "";
+     if(!(this.dataA.r_Opt.length==0)){
+      for (var ref of splitted){
+        mapped_to+=mapping[ref]+", "
+      }
+      this.dataA.r_Opt = mapped_to.substring(0,mapped_to.length-2);
+     }
+
+     var splitted = this.dataA.r_Vmag.split(",");
+     var mapped_to = "";
+     if(!(this.dataA.r_Vmag.length==0)){
+      for (var ref of splitted){
+        mapped_to+=mapping[ref]+", "
+      }
+      this.dataA.r_Vmag = mapped_to.substring(0,mapped_to.length-2);
+     }
+
+     var splitted = this.dataA.r_Ppulse.split(",");
+     var mapped_to = "";
+     if(!(this.dataA.r_Ppulse.length==0)){
+      for (var ref of splitted){
+        mapped_to+=mapping[ref]+", "
+      }
+      this.dataA.r_Ppulse = mapped_to.substring(0,mapped_to.length-2);
+     }
+
+     var splitted = this.dataA.r_Fx.split(",");
+     var mapped_to = "";
+     if(!(this.dataA.r_Fx.length==0)){
+      for (var ref of splitted){
+        mapped_to+=mapping[ref]+", "
+      }
+      this.dataA.r_Fx = mapped_to.substring(0,mapped_to.length-2);
+     }
+     
+   }
 }

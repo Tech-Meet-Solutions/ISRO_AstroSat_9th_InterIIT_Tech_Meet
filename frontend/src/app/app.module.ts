@@ -16,6 +16,11 @@ import { PlotlyViaWindowModule } from 'angular-plotly.js';
 import { MatTableModule } from '@angular/material/table' 
 import {MatListModule} from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
+import { MatSortModule} from '@angular/material/sort';
+import { SelectionModel } from '@angular/cdk/collections';
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,6 +39,10 @@ import { MatCardModule } from '@angular/material/card';
     MatTableModule,
     MatListModule,
     MatCardModule,
+    MatSortModule,
+    
+    
+
   ],
   providers: [],
   bootstrap: [AppComponent]

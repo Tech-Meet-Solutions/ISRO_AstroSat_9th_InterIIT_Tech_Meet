@@ -16,6 +16,7 @@ export interface SourceA {
   Dec: number;
   Opt: string;
   r_Opt:string;
+  r_Fx:string;
   Vmag:string;
   B_V:string;
   U_B:string;
@@ -35,6 +36,7 @@ export interface SourceA {
   sxt:any;
   laxpc:any;
   czti:any;
+  refs:any;
 }
 
 export interface SourceB {
@@ -66,4 +68,12 @@ export interface Source_Visibility {
   vis_laxpc : boolean;
   vis_czti : boolean;
   vis_sxt : boolean;
+}
+
+export interface Refs {
+  
+  id:String;
+  bib: String;
+  Name : String;
+  desc : String;
 }

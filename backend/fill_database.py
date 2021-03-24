@@ -44,51 +44,78 @@ with open("data/summaryA.csv") as file1:
             for i in row["r_Opt"].split(','):
                 if i =="":
                     continue
-                lmxb.add(i)
+                lmxb.add(i.strip())
             for i in row["r_Fx"].split(','):
                 if i =="":
                     continue
-                lmxb.add(i)
+                lmxb.add(i.strip())
             for i in row["r_Vmag"].split(','):
                 if i =="":
                     continue
-                lmxb.add(i)
+                lmxb.add(i.strip())
             for i in row["r_Ppulse"].split(','):
                 if i =="":
                     continue
-                lmxb.add(i)
+                lmxb.add(i.strip())
 
         elif row["class"] =="hmxb":
             
             for i in row["r_Opt"].split(','):
                 if i =="":
                     continue
-                hmxb.add(i)
+                hmxb.add(i.strip())
             for i in row["r_Fx"].split(','):
                 if i =="":
                     continue
-                hmxb.add(i)
+                hmxb.add(i.strip())
             for i in row["r_Vmag"].split(','):
                 if i =="":
                     continue
-                hmxb.add(i)
+                hmxb.add(i.strip())
             for i in row["r_Ppulse"].split(','):
                 if i =="":
                     continue
-                hmxb.add(i)
+                hmxb.add(i.strip())
         else:
             print("UNKNOWN SOURCE")
             
 
 print(hmxb)
 print(lmxb)
-sys.exit(0)
+hmxb_full = {}
+lmxb_full = {}
 with open("data/hmxbrefs.csv") as hmxbref_file:
     #use numpy to select only those rows  which have 
-    pass
+    dr = csv.DictReader(hmxbref_file)
+    for row in dr:
+        hmxb_full[row["id"]] = (row["id"],row["bib"],row["Name"],row["desc"])
 
 
+with open("data/lmxbrefs.csv") as lmxbref_file:
+    #use numpy to select only those rows  which have 
+    dr = csv.DictReader(lmxbref_file)
+    for row in dr:
+        lmxb_full[row["id"]] = (row["id"],row["bib"],row["Name"],row["desc"])
+    
+hmxb_to_add=[]
+for i in hmxb:
+    if not i in hmxb_full:
+        continue
+    t = hmxb_full[i]
+    hmxb_to_add.append((t[0]+"_hmxb",t[1],t[2],t[3]))
+
+lmxb_to_add=[]
+for i in lmxb:
+    if not i in lmxb_full:
+        continue
+    t = lmxb_full[i]
+    lmxb_to_add.append((t[0]+"_lmxb",t[1],t[2],t[3]))
+
+hmxb_to_add = hmxb_to_add+lmxb_to_add
 ##
+
+#sys.exit(0)
+
 
 with open('data/publications.csv', 'r') as fin:
     dr = csv.DictReader(fin)
@@ -228,6 +255,13 @@ except Exception as error:
 # insert common czti data to db
 try:
     cursor.executemany("INSERT INTO source_sourcea_czti(sourcea_id,sourceb_id) VALUES(?,?)", obs_cz)
+    con.commit()
+except Exception as error:
+    print(error)
+
+# insert hmxbrefs and lmxbrefs data  to db
+try:
+    cursor.executemany("INSERT INTO source_refs(id,bib,Name,desc) VALUES(?,?,?,?)", hmxb_to_add)
     con.commit()
 except Exception as error:
     print(error)
