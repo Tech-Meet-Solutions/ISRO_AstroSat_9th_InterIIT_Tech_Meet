@@ -13,11 +13,14 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatGridListModule } from '@angular/material/grid-list';
 
 import { PlotlyViaWindowModule } from 'angular-plotly.js';
-import { MatTableModule } from '@angular/material/table' 
-import {MatListModule} from '@angular/material/list';
+import { MatTableModule } from '@angular/material/table'
+import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
-import { MatSortModule} from '@angular/material/sort';
+import { MatSortModule } from '@angular/material/sort';
 import { SelectionModel } from '@angular/cdk/collections';
+import { MatButtonModule } from '@angular/material/button';
+import { MatRadioModule } from '@angular/material/radio';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -40,9 +43,9 @@ import { SelectionModel } from '@angular/cdk/collections';
     MatListModule,
     MatCardModule,
     MatSortModule,
-    
-    
-
+    MatButtonModule,
+    MatRadioModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
