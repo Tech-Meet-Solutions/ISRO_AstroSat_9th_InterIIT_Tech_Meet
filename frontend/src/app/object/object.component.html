@@ -114,7 +114,7 @@
   <div id=pub-header>
     <mat-card id=pub-header-card>
       <mat-card-title *ngIf="!(dataA.publications.length==0); else no_publication">
-        List of Publications
+        Papers referencing {{ dataA.Name }} <button (click)="download_pub()">(Download as csv)</button>
       </mat-card-title>
     </mat-card>
   </div>
@@ -124,7 +124,7 @@
       <!--Title-->
       <ng-container matColumnDef="Title">
         <th mat-header-cell id=head-cell *matHeaderCellDef> Title </th>
-        <td mat-cell id="paper-table-cell" *matCellDef="let element"> 
+        <td mat-cell id="paper-table-cell" *matCellDef="let element">
           <a href="https://ui.adsabs.harvard.edu/abs/2021MNRAS.502..313K">{{element.Name}}</a>
         </td>
       </ng-container>
@@ -189,7 +189,7 @@
 </div>
 <ng-template #no_publication>
   <mat-card-title>
-    No Publications
+    No Papers referencing {{ dataA.Name }}
   </mat-card-title>
 </ng-template>
 
@@ -197,7 +197,7 @@
   <div id=sources-header>
     <mat-card id=sources-header-card>
       <mat-card-title>
-        List of Sources
+        AstroSat Observations with {{ dataA.Name }} in FoV <button (click)="download_obs()">(Download as csv)</button>
       </mat-card-title>
     </mat-card>
   </div>
@@ -224,7 +224,7 @@
 
       <!--obsid-->
       <ng-container matColumnDef="obsid">
-        <th mat-header-cell  mat-sort-header id=head-cell *matHeaderCellDef> Obsid </th>
+        <th mat-header-cell mat-sort-header id=head-cell *matHeaderCellDef> Obsid </th>
         <td mat-cell id=name *matCellDef="let element"> {{element.obsid.substring(0,11)}} <br>
           {{element.obsid.substring(11)}} </td>
       </ng-container>
@@ -255,7 +255,7 @@
 
       <!--proposal_id-->
       <ng-container matColumnDef="proposal_id">
-        <th mat-header-cell  mat-sort-header id=head-cell *matHeaderCellDef> Proposal ID </th>
+        <th mat-header-cell mat-sort-header id=head-cell *matHeaderCellDef> Proposal ID </th>
         <td mat-cell id=name *matCellDef="let element"> {{element.proposal_id}} </td>
       </ng-container>
 
