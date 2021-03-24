@@ -45,12 +45,19 @@ div {
 }
 
 .box-tools {
+  
   color: #FF6C6C;
   font-weight: 1000;
-  width: 33.33%;
-  display: inline-block;
+  width: 50%;
+  
   //text-align: center;
-  padding-left: 50px;
+  text-align: center;
+  background-color: whitesmoke;
+  margin:auto;
+  margin-top:10px;
+  margin-bottom:10px;
+  padding-top:5px;
+  height:30px;
 }
 
 #data-title {
@@ -72,10 +79,16 @@ li {
 }
 
 .div-pictures {
-  padding-left: 30px;
+  padding-left: 20%;
+  
+  
   padding-top: 10px;
   padding-bottom: 10px;
+  margin-bottom: 80px;;
+
 }
+
+
 
 .div-coords,
 .div-type {
@@ -103,12 +116,13 @@ li {
 
 .SDSS,
 .panstars {
-  height: 130px;
-  width: 130px;
+  height: 150px;
+  width: 150px;
 }
 
 .div-pictures a {
   margin: 5px;
+  
 }
 
 #aladin-lite-div {
@@ -183,15 +197,7 @@ table {
   width: 100%;
 }
 
-.mat-column-Title{
-    max-width:100px;
-}
-.mat-column-Authors{
-    max-width: 70px;
-}
-.mat-column-Keywords{
-    max-width: 70px;
-}
+
 #paper-table-cell,
 #name,
 #head-cell {
@@ -204,12 +210,19 @@ table {
   word-wrap: break-word;
   max-width: 400px;
 }
-
+.mat-cell{
+  height:100px;
+}
 .mat-column-Abstract,
 #Abstract {
   word-wrap: break-word;
-  max-width: 1000px;
+  width: 50%;
+  
 }
+.mat-column-Title,.mat-column-Authors,.mat-column-Keywords{
+  width: width 20%;
+}
+
 
 .mat-column-observer {
   word-wrap: break-word;
@@ -253,7 +266,16 @@ button {
     border-radius: 0px;
     color: whitesmoke;
     position: relative;
+   
 
+  }
+  .side-links {
+    width: 100%;
+  }
+  .div-data {
+    width: 100%;
+    
+  
   }
 }
 
@@ -265,5 +287,18 @@ button {
     color: whitesmoke;
     position: relative;
 
+
+
+  }
+  .div-data {
+    width: 100%;
+    
+  
+  }
+  .side-links {
+    width: 100%;
+    
+  
+  
   }
 }
