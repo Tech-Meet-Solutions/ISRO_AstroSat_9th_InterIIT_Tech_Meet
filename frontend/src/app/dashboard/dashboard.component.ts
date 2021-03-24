@@ -20,6 +20,7 @@ export class DashboardComponent implements OnInit {
   radec: any;
   latlon: any;
 
+
   constructor(
     private server: ServerService
   ) {
@@ -64,7 +65,7 @@ export class DashboardComponent implements OnInit {
       geo: {
         projection: {
           type: 'mollweide',
-          scale: 0.8
+          scale: 1
         },
         showcoastlines: false,
         lonaxis: {
@@ -104,6 +105,18 @@ export class DashboardComponent implements OnInit {
     var src_lmxb = [];
     var src_hmxb = [];
     for (var i = 0; i < this.lmxb.length; ++i) {
+      let vis = "";
+      if (this.lmxb[i].isObserved_uvit)
+        vis = "UVIT, SXT, LAXPC, CZTI";
+      else if (this.lmxb[i].isObserved_sxt)
+        vis = "SXT, LAXPC, CZTI";
+      else if (this.lmxb[i].isObserved_laxpc)
+        vis = "LAXPC, CZTI";
+      else if (this.lmxb[i].isObserved_czti)
+        vis = "CZTI";
+      else
+        vis = "None";
+
       src_lmxb.push(
         A.source(
           this.lmxb[i].RA,
@@ -112,12 +125,25 @@ export class DashboardComponent implements OnInit {
             Name: this.lmxb[i].Name,
             RA: this.lmxb[i].RA,
             Dec: this.lmxb[i].Dec,
+            Visibilty: vis,
             '': `<a target="_blank" href="/object/${this.lmxb[i].id}">More Info</a><br><a target="_blank" href="http://simbad.u-strasbg.fr/simbad/sim-id?output.format=HTML&Ident=${this.lmxb[i].Name.replace('+', '%2B')}">Simbad</a>`
           }
         )
       );
     }
     for (var i = 0; i < this.hmxb.length; ++i) {
+      let vis = "";
+      if (this.hmxb[i].isObserved_uvit)
+        vis = "UVIT, SXT, LAXPC, CZTI";
+      else if (this.hmxb[i].isObserved_sxt)
+        vis = "SXT, LAXPC, CZTI";
+      else if (this.hmxb[i].isObserved_laxpc)
+        vis = "LAXPC, CZTI";
+      else if (this.hmxb[i].isObserved_czti)
+        vis = "CZTI";
+      else
+        vis = "None";
+
       src_hmxb.push(
         A.source(
           this.hmxb[i].RA,
@@ -126,13 +152,14 @@ export class DashboardComponent implements OnInit {
             Name: this.hmxb[i].Name,
             RA: this.hmxb[i].RA,
             Dec: this.hmxb[i].Dec,
+            Visibilty: vis,
             '': `<a target="_blank" href="/object/${this.hmxb[i].id}">More Info</a><br><a target="_blank" href="http://simbad.u-strasbg.fr/simbad/sim-id?output.format=HTML&Ident=${this.hmxb[i].Name.replace('+', '%2B')}">Simbad</a>`
           }
         )
       );
     }
-    var cat_lmxb = A.catalog({ name: 'LMXB', shape: 'circle', color: '#5d5', onClick: 'showPopup', sourceSize: 16 });
-    var cat_hmxb = A.catalog({ name: 'HMXB', shape: 'circle', color: '#f00', onClick: 'showPopup', sourceSize: 16 });
+    var cat_lmxb = A.catalog({ name: 'LMXB', shape: 'circle', color: '#1A85FF', onClick: 'showPopup', sourceSize: 16 });
+    var cat_hmxb = A.catalog({ name: 'HMXB', shape: 'circle', color: '#D41159', onClick: 'showPopup', sourceSize: 16 });
     this.aladin.addCatalog(cat_lmxb);
     this.aladin.addCatalog(cat_hmxb);
     cat_lmxb.addSources(src_lmxb);
@@ -149,7 +176,7 @@ export class DashboardComponent implements OnInit {
       hoverinfo: 'text',
       hoverlabel: { bgcolor: '#41454c' },
       marker: {
-        color: '#5d5',
+        color: '#1A85FF',
         opacity: 0.5,
         size: 7,
         line: {
@@ -166,7 +193,7 @@ export class DashboardComponent implements OnInit {
       hoverinfo: 'text',
       hoverlabel: { bgcolor: '#41454c' },
       marker: {
-        color: '#f00',
+        color: '#D41159',
         opacity: 0.5,
         size: 7,
         line: {
@@ -191,10 +218,11 @@ export class DashboardComponent implements OnInit {
       lon: this.lmxb.map(function (value, index) { return -value.GLON; }),
       lat: this.lmxb.map(function (value, index) { return value.GLAT; }),
       text: this.lmxb.map(function (value, index) { return `(${value.GLON}, ${value.GLAT})` }),
+      extra: this.lmxb,
       hoverinfo: 'text',
       hoverlabel: { bgcolor: '#41454c' },
       marker: {
-        color: '#5d5',
+        color: '#1A85FF',
         opacity: 0.5,
         size: 7,
         line: {
@@ -208,10 +236,11 @@ export class DashboardComponent implements OnInit {
       lon: this.hmxb.map(function (value, index) { return -value.GLON; }),
       lat: this.hmxb.map(function (value, index) { return value.GLAT; }),
       text: this.hmxb.map(function (value, index) { return `(${value.GLON}, ${value.GLAT})` }),
+      extra: this.hmxb,
       hoverinfo: 'text',
       hoverlabel: { bgcolor: '#41454c' },
       marker: {
-        color: '#f00',
+        color: '#D41159',
         opacity: 0.5,
         size: 7,
         line: {
@@ -239,10 +268,17 @@ export class DashboardComponent implements OnInit {
 
   click_plot(event): void {
     console.log('xx');
-    console.log(event);
+    console.log(event.points[0]);
     console.log(event.points[0].lat);
     console.log(-event.points[0].lon);
-    this.aladin.gotoRaDec(-event.points[0].lon, event.points[0].lat);
+    if (this.mollweide_lat_long) {
+      let p = event.points[0].data.extra[event.points[0].pointIndex];
+      console.log(p);
+      this.aladin.gotoRaDec(p.RA, p.Dec);
+    }
+    else {
+      this.aladin.gotoRaDec(-event.points[0].lon, event.points[0].lat);
+    }
   }
 
   moll_switch(): void {
