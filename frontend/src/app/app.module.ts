@@ -14,7 +14,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
 
 import { PlotlyViaWindowModule } from 'angular-plotly.js';
 import { MatTableModule } from '@angular/material/table' 
-
+import {MatListModule} from '@angular/material/list';
+import { MatCardModule } from '@angular/material/card';
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,6 +32,8 @@ import { MatTableModule } from '@angular/material/table'
     MatGridListModule,
     PlotlyViaWindowModule,
     MatTableModule,
+    MatListModule,
+    MatCardModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

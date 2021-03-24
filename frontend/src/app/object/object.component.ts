@@ -4,8 +4,11 @@ import { ServerService } from '../server.service';
 import { SourceA, SourceB, Paper, Source_Visibility } from '../source';
 import {SelectionModel} from '@angular/cdk/collections';
 import {MatTableDataSource} from '@angular/material/table';
+import {MatListModule} from '@angular/material/list';
+import { MatCardModule } from '@angular/material/card';
+import { map } from 'jquery';
 
-
+declare var A: any;
 
 @Component({
   selector: 'app-object',
@@ -16,6 +19,7 @@ export class ObjectComponent implements OnInit {
   myVar: number;
   id: string;
   dataA: SourceA;
+  dataB :Array<SourceB>;
   dataSource = new MatTableDataSource<SourceB>();
   dataSourcePapers = new MatTableDataSource<Paper>();
   source_idx = new Set();
@@ -25,46 +29,27 @@ export class ObjectComponent implements OnInit {
   displayedColumns: string[] = [  'Object','obsid','RA','Dec','instrument','date_time',
                                 'proposal_id','target_id','observer','abstract','visibilility'];
   ColumnsPapers: string[] = ['Title', 'Authors','Keywords','Abstract']
+
+  aladin: any;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private server: ServerService
   ) {
     this.dataA = {
-      id: 0,
-      Name : '',
-      Type: '',
-      RA: 0,
-      Dec: 0,
-      Opt:'',
-      r_Opt:'',
-      Vmag:'',
-      B_V:'',
-      U_B:'',
-      E_BV:'',
-      r_Vmag:'',
-      Fx:'',
-      Range:'',
-      Porb:'',
-      Ppulse:'',
-      r_Ppulse:'',
-      Cat:'',
-      SpType:'',
-      Class:'',
-
-      publications: Array<Paper>(),
-      
-      uvit:Array<SourceB>(),
-      sxt:Array<SourceB>(),
-      laxpc:Array<SourceB>(),
+      id: 0,Name : '',Type:'',RA: 0,Dec: 0,Opt:'',r_Opt:'',Vmag:'',B_V:'', U_B:'',E_BV:'', r_Vmag:'',Fx:'', Range:'', Porb:'',Ppulse:'',
+      r_Ppulse:'', Cat:'', SpType:'',Class:'', publications: Array<Paper>(),uvit:Array<SourceB>(),sxt:Array<SourceB>(), laxpc:Array<SourceB>(),
       czti:Array<SourceB>()
     };
+    this.dataB = Array<SourceB>();
     this.visibility_array = {};
     
     
   }
 
   ngOnInit(): void {
+    //this.aladin = A.aladin('#aladin-lite-div', { cooFrame: "ICRS", survey: "P/Fermi/color", fov: 60, showSimbadPointerControl: true });
+    //this.aladin.getBaseImageLayer().getColorMap().update('grayscale');
     this.route.paramMap.subscribe(params => {
       this.id = params.get('id');
       console.log(this.id);
@@ -74,11 +59,10 @@ export class ObjectComponent implements OnInit {
       response => {
         this.myVar = 0;
         this.dataA = response;
-        this.dataSource = new MatTableDataSource<SourceB>(this.dataA.czti.concat(this.dataA.czti,this.dataA.sxt,this.dataA.uvit,this.dataA.laxpc));
-        console.log(this.dataA.publications);
-        console.log(this.dataA.czti);
-        console.log("Done");
         this.fill_visibility_array();
+        this.dataSource = new MatTableDataSource<SourceB>(this.dataB);
+        this.fill_cat_span();
+        this.fill_type_span();
         this.dataSourcePapers = new MatTableDataSource<Paper>(this.dataA.publications);
       },
       error => {
@@ -93,18 +77,38 @@ export class ObjectComponent implements OnInit {
 
     fill_visibility_array(){
       console.log("inside vis func");
-      //let source_idx = new Set();
+      let uvit = [];
+      let czti = [];
+      let laxpc = [];
+      let sxt = [];
+
       for(var source of this.dataA.czti ){
+        if (!this.source_idx.has(source.id)){
+          this.dataB.push(source);
+        }
         this.source_idx.add(source.id);
+        czti.push(source.id);
       }
       for(var source of this.dataA.uvit ){
+        if (!this.source_idx.has(source.id)){
+          this.dataB.push(source);
+        }
         this.source_idx.add(source.id);
+        uvit.push(source.id);
       }
       for(var source of this.dataA.sxt ){
+        if (!this.source_idx.has(source.id)){
+          this.dataB.push(source);
+        }
         this.source_idx.add(source.id);
+        sxt.push(source.id);
       }
       for(var source of this.dataA.laxpc ){
+        if (!this.source_idx.has(source.id)){
+          this.dataB.push(source);
+        }
         this.source_idx.add(source.id);
+        laxpc.push(source.id);
       }
       for(var idx of this.source_idx){
         //console.log(idx);
@@ -112,14 +116,16 @@ export class ObjectComponent implements OnInit {
        
 
         this.visibility_array[Number(idx)] = {
-          vis_uvit : true,
-          vis_laxpc : true,
-          vis_czti : true,
-          vis_sxt : true
+          vis_uvit : uvit.includes(idx),
+          vis_laxpc : uvit.includes(idx) || laxpc.includes(idx)|| sxt.includes(idx),
+          vis_czti : uvit.includes(idx) || laxpc.includes(idx)|| sxt.includes(idx) || czti.includes(idx),
+          vis_sxt : uvit.includes(idx) || sxt.includes(idx)
         };
       }
-      console.log(this.visibility_array);
-      this.FILL();
+      //console.log(this.visibility_array);
+      //console.log(this.dataA);
+      //console.log(this.visibility_array[355].vis_czti);
+      //this.FILL();
     }
 
     /** Whether the number of selected elements matches the total number of rows. */
@@ -159,9 +165,21 @@ export class ObjectComponent implements OnInit {
       return "others";
     }
 
-    check(): boolean{
-        return false;
+    check(id,ins): boolean{
+        if(ins=="uvit"){
+          return (this.visibility_array[id].vis_uvit);
+        }
+        else if(ins=="sxt"){
+          return ( this.visibility_array[id].vis_sxt);
+        }
+        else if(ins=="laxpc"){
+          return (this.visibility_array[id].vis_laxpc );
+        }
+         else if(ins=="czti"){
+          return (this.visibility_array[id].vis_czti);
+        }     
     }
+   
      
       public toggleText(event, id) { 
   
@@ -286,5 +304,53 @@ export class ObjectComponent implements OnInit {
           buttonText.innerHTML = "Show Less"; 
       } 
   }
+   //To check if some data value is "" i.e. empty
+   public check_empty(data){
+    if(data==''){
+      return  false;
+    }  
+    return true;
+    
+   }
+
+   public fill_cat_span(){
+    var splitted = this.dataA.Cat.split(","); 
+    var mapping = {};
+    mapping={"A": "Ariel V sky survey", "AS": "ASCA", "B": "BeppoSAX", "C": "Compton Gamma-ray Observatory", 
+            "E": "Einstein Observatory", "Exo": "Exosat", "G": "Ginga", "Gr": "Granat", "H": "HEAO A-1 sky survey", 
+            "Ha": "Hakucho", "I": "Indian X-ray Astronomy Experiment (IXAE)", "K": "Kvant", "M": "MIT OSO-7 sky survey", 
+            "OAO": "Orbiting Astronomical Observatory", "R": "ROSAT", "S": "SAS 3", "SL": "Space Lab", "T": "Tenma", 
+            "U": "Uhuru sky survey", "V": "Vela-5 and -6 satellites", "X": "Rossi XTE"};
+    var cat_verbose= "";
+    for(var idx of splitted){
+      if(idx==splitted[splitted.length-1]){
+        cat_verbose+=mapping[idx];
+      }
+      else{
+        cat_verbose+=mapping[idx]+", ";
+      }
+      
+    }
+    //console.log(cat_verbose);
+    this.dataA.Cat = cat_verbose;
+   }
+
+   public fill_type_span(){
+     if(this.dataA.Type.length==0){
+       return;
+     }
+     var type_verbose="";
+      var mapping={"A": "Atoll source", "B": "X-ray Burst", "D": "Dipping low-mass X-ray binary", "G": "Globular-cluster X-ray source",
+                  "P": "X-ray pulsar", "T": "Transient X-ray source", "U": "Ultra-soft X-ray spectrum", "Z": "Z-type"};
+      for(let i = 0; i < this.dataA.Type.length; i++){
+        if(!(this.dataA.Type[i] in mapping)){
+          continue;
+        }
+        type_verbose+=mapping[this.dataA.Type[i]]+", ";
+        
+      }
+      console.log(this.dataA.Type);
+      this.dataA.Type = type_verbose.substring(0,type_verbose.length-2);
+   }
    
 }
