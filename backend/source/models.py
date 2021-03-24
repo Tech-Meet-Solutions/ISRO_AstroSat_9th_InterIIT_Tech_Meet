@@ -65,6 +65,7 @@ class SourceA(models.Model):
     Range = models.CharField(max_length=100)
     r_Fx = models.CharField(max_length=200)
     Porb = models.CharField(max_length=10)
+    Porb2 = models.CharField(max_length=10)
     Ppulse = models.CharField(max_length=10)
     r_Ppulse = models.CharField(max_length=200)
     Cat = models.CharField(max_length=100)

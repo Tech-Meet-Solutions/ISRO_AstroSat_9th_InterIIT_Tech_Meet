@@ -39,7 +39,7 @@ export class ObjectComponent implements OnInit,AfterViewInit {
     private server: ServerService
   ) {
     this.dataA = {
-      id: 0,Name : '',Type:'',RA: 0,Dec: 0,Opt:'',r_Fx:'',r_Opt:'',Vmag:'',B_V:'', U_B:'',E_BV:'', r_Vmag:'',Fx:'', Range:'', Porb:'',Ppulse:'',
+      id: 0,Name : '',Type:'',RA: 0,Dec: 0,Opt:'',r_Fx:'',r_Opt:'',Vmag:'',B_V:'', U_B:'',E_BV:'', r_Vmag:'',Fx:'', Range:'', Porb:'',Porb2:'',GLON:'',GLAT:'',Ppulse:'',
       r_Ppulse:'', Cat:'', SpType:'',Class:'', publications: Array<Paper>(),uvit:Array<SourceB>(),sxt:Array<SourceB>(), laxpc:Array<SourceB>(),
       czti:Array<SourceB>(),refs:Array<Refs>()
     };

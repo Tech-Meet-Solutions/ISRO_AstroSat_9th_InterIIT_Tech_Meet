@@ -83,6 +83,7 @@ class SourceASerializer(DynamicFieldsModelSerializer):
                   'Range',
                   'r_Fx',
                   'Porb',
+                   'Porb2',
                   'Ppulse',
                   'r_Ppulse',
                   'Cat',

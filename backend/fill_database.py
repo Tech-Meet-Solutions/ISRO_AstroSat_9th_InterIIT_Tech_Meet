@@ -4,25 +4,6 @@ import sqlite3
 import json
 import sys
 
-dummy_abstract = '''
-            loremlorem Lorem ipsum dolor sit amet consectetur adipisicing elit
-            . Modi a consectetur facilis facere hic quidem atque ullam
-             culpa, dolor sint, aspernatur repellat nobis, vitae tempora quia.
-              Facilis quo tenetur quibusdam.lorem Lorem ipsum dolor sit amet 
-              consectetur adipisicing elit. Modi a consectetur facilis facere hic quidem 
-              atque ullam culpa, dolor sint, aspernatur repellat nobis, vitae tempora quia.
-              Facilis quo tenetur quibusdam.lorem Lorem ipsum dolor sit amet consectetur
-               adipisicing elit. Modi a consectetur facilis facere hic quidem atque ullam 
-               culpa, dolor sint, aspernatur repellat nobis, vitae tempora quia. Facilis quo
-                tenetur quibusdam.lorem Lorem ipsum dolor sit amet consectetur adipisicing 
-                elit. Modi a consectetur facilis facere hic quidem atque ullam culpa, dolor
-                 sint, aspernatur
-             repellat nobis, vitae tempora quia. Facilis quo tenetur quibusdam. 
-
-'''
-
-
-
 
 def Round(a):
     return float(np.round(float(a), 4))
@@ -80,8 +61,6 @@ with open("data/summaryA.csv") as file1:
             print("UNKNOWN SOURCE")
             
 
-print(hmxb)
-print(lmxb)
 hmxb_full = {}
 lmxb_full = {}
 with open("data/hmxbrefs.csv") as hmxbref_file:
@@ -127,7 +106,7 @@ with open('data/summaryB.csv', 'r') as fin:
     dr = csv.DictReader(fin)
     len_cat_B = 0
     to_db_src_B = [(i['idx'], str(i['object']),str(i['obsid']), Round(i['ra']), Round(i['dec']), str(i['ins']), 
-                    str(i['date_time']),str(i['proposal_id']),str(i['target_id']),"Observer_Name",dummy_abstract)
+                    str(i['date_time']),str(i['proposal_id']),str(i['target_id']),i['abstract'],i['PI'])
                     for i in dr]
                             
 
@@ -146,7 +125,7 @@ with open('data/summaryA.csv', 'r') as fA:
     
     dr = csv.DictReader(fA)
     l1 = [ (i['Id'], str(i['Name']), Round(i['RA']), Round(i['DE']), i['B-V'],i['Cat'],i['class'],i['E(B-V)'],i['Fx'],
-        i['GLAT'],i['GLON'],i['Opt'],i['Porb'],i['Ppulse'],i['Range'],i['SpType'],i['Type'],i['U-B'],i['Vmag'],
+        i['GLAT'],i['GLON'],i['Opt'],i['Porb'],i['Porb2'],i['Ppulse'],i['Range'],i['SpType'],i['Type'],i['U-B'],i['Vmag'],
         i['r_Fx'],i['r_Opt'],i['r_Ppulse'],i['r_Vmag']) for i in dr]
     
 with open('data/observed_A.csv','r') as f_obs:
@@ -160,7 +139,7 @@ for i in zip(l1,l2):
     a = i[0]
     b = i[1]
     to_db_src_A.append((a[0],a[1],a[2],a[3],convert_bool(b[0]),convert_bool(b[1]),convert_bool(b[2]),convert_bool(b[3]),a[4],a[5],
-        a[6],a[7],a[8],a[9],a[10],a[11],a[12],a[13],a[14],a[15],a[16],a[17],a[18],a[19],a[20],a[21],a[22]))
+        a[6],a[7],a[8],a[9],a[10],a[11],a[12],a[13],a[14],a[15],a[16],a[17],a[18],a[19],a[20],a[21],a[22],a[23]))
 
     #id,Name,RA,Dec,uvit,sxt,laxpc,czti,category
 
@@ -219,7 +198,7 @@ except Exception as error:
 
 # insert catalog A data to db
 try:
-    cursor.executemany("INSERT INTO source_sourcea(id, Name,RA,Dec,isObserved_uvit,isObserved_sxt,isObserved_laxpc,isObserved_czti,B_V,Cat,Class,E_BV,Fx,GLAT,GLON,Opt,Porb,Ppulse,Range,SpType,Type,U_B,Vmag,r_Fx,r_Opt,r_Ppulse,r_Vmag) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", to_db_src_A)
+    cursor.executemany("INSERT INTO source_sourcea(id, Name,RA,Dec,isObserved_uvit,isObserved_sxt,isObserved_laxpc,isObserved_czti,B_V,Cat,Class,E_BV,Fx,GLAT,GLON,Opt,Porb,Porb2,Ppulse,Range,SpType,Type,U_B,Vmag,r_Fx,r_Opt,r_Ppulse,r_Vmag) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", to_db_src_A)
     con.commit()
 except Exception as error:
     print(error)

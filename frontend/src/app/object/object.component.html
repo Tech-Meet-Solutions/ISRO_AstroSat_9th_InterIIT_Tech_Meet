@@ -5,93 +5,93 @@
     <span *ngIf="dataA.Class=='hmxb'">High Mass X-Ray Binary</span> 
   </mat-card-title>
   <hr>
-  <div class="div-data">
-    <div class=div-coords>
-      <div>
-        Equitorial Coordinates(RA/Dec) (J2000) <br>
-         hms dms <br>
-          {{dataA.RA}} , {{dataA.Dec}} 
-      </div>
-      <div>
-        Galactic Coordinates (lon/lat) <br>
-        GLON, GLAT
-      </div>
-    </div>
-    <div class=div-type>
-      Type <br>
-      {{dataA.Type}}
-    </div>
-    <div class=div-xray>
-      <div  *ngIf=" check_empty(dataA.Fx)">
-        Flux: {{dataA.Fx}} <span>&#181;</span>Jy {{dataA.Range}}  
-        <span *ngIf="check_empty(dataA.r_Fx)"> [{{dataA.r_Fx}}]</span> 
-      </div>
-      <div  *ngIf=" check_empty(dataA.Porb)">
-        Orbital Period: {{dataA.Porb}} (Porb2) hours
-      </div>
-      <div  *ngIf=" check_empty(dataA.Ppulse)">
-        Pulsar Period: {{dataA.Ppulse}} seconds 
-        <span *ngIf="check_empty(dataA.r_Ppulse)"> [{{dataA.r_Ppulse}}]</span> 
-      </div>
-      <div  *ngIf=" check_empty(dataA.Cat)">
-       Cat: {{dataA.Cat}}
-       <span id=span-cat >
-
-       </span>
-      </div>
-    </div>
-    <div class=div-opt>
-      <div  *ngIf=" check_empty(dataA.Opt)" >
-        Optical Counterpart : {{dataA.Opt}} 
-        <span *ngIf="check_empty(dataA.r_Opt)"> [{{dataA.r_Opt}}]</span> 
-        <span *ngIf="check_empty(dataA.SpType)" >[{{dataA.SpType}}]</span>
-      </div >
-      <div>
-        Photometry:
+  <div class="bg-img">
+    <div class="div-data">
+      <div class=div-coords>
         <div>
-          <span *ngIf=" check_empty(dataA.Vmag)" >V:{{dataA.Vmag}} [{{dataA.r_Vmag}}], </span> 
-          <span *ngIf=" check_empty(dataA.B_V)"> B-V: {{dataA.B_V}}, </span>
-          <span *ngIf=" check_empty(dataA.U_B)"> U-B: {{dataA.U_B}} </span>
+          <span id="data-title"> Equitorial Coordinates(RA/Dec) (J2000)</span>  <br>
+           <!--hms dms <br>-->
+            {{dataA.RA}} , {{dataA.Dec}} 
         </div>
-        <div >
-          <span *ngIf=" check_empty(dataA.E_BV)" >E(B-V):{{dataA.E_BV}}  </span>
+        <div>
+          <span id="data-title" > Galactic Coordinates (lon/lat)</span>  <br>
+          {{dataA.GLON}}, {{dataA.GLAT}}
         </div>
-
       </div>
-    </div>
-    <div class=div-references>
-      <ul>
-        <li *ngFor="let book of dataA.refs;let indexOfelement=index;">
-          <span *ngIf="check_empty(dataA.refs[indexOfelement].bib); else full_desc">
-            [{{indexOfelement+1}}] <a href="https://ui.adsabs.harvard.edu/abs/dataA.refs[indexOfelement].bib/abstract">{{dataA.refs[indexOfelement].Name}}</a>  
-          </span>
-          <ng-template #full_desc>
-            [{{indexOfelement+1}}] {{dataA.refs[indexOfelement].Name}}  : {{dataA.refs[indexOfelement].desc}}
-          </ng-template>
-          
-        </li>
-    </ul>
-    </div>
-  </div >
-  <div class="side-links">
-    <div class=div-pictures>
-      <a href="http://skyserver.sdss.org/dr16/en/tools/chart/navi.aspx?opt=G&ra={{dataA.RA}}&dec={{dataA.Dec}}&scale=0.1981"><img class=SDSS src="../../assets/static/SDSS.jpeg" alt=""></a> 
-      <a href="http://ps1images.stsci.edu/cgi-bin/ps1cutouts?pos={{dataA.RA}}{{dataA.Dec}}&filter=color&filetypes=stack&auxiliary=data&size=240&output_size=0&verbose=0&autoscale=99.500000&catlist="><img class=panstars src="../../assets/static/panstars.jpeg" alt=""></a> 
-      <div id="aladin-lite-div" >
-        <a href="http://skyserver.sdss.org/dr16/en/tools/chart/navi.aspx?opt=G&ra={{dataA.RA}}&dec={{dataA.Dec}}&scale=0.1981"><img class=SDSS src="../../assets/static/SDSS.jpeg" alt=""></a> 
-     </div>
+      <div class=div-type>
+        <span id="data-title">Type</span> <br>
+        {{dataA.Type}}
+      </div>
+      <div class=div-xray>
+        <div  *ngIf=" check_empty(dataA.Fx)">
+          <span id="data-title">Flux</span> <br> {{dataA.Fx}} <span>&#181;</span>Jy {{dataA.Range}}  
+          <span *ngIf="check_empty(dataA.r_Fx)"> [{{dataA.r_Fx}}]</span> 
+        </div>
+        <div  *ngIf=" check_empty(dataA.Porb)">
+        <span id="data-title">Orbital Period</span> <br> {{dataA.Porb}} (Porb2) hours
+        </div>
+        <div  *ngIf=" check_empty(dataA.Ppulse)">
+         <span id="data-title">Pulsar Period</span> <br> {{dataA.Ppulse}} seconds 
+          <span *ngIf="check_empty(dataA.r_Ppulse)"> [{{dataA.r_Ppulse}}]</span> 
+        </div>
+        <div  *ngIf=" check_empty(dataA.Cat)">
+        <span id="data-title"> Cat</span> <br> {{dataA.Cat}}
+        </div>
+      </div>
+      <div class=div-opt>
+        <div  *ngIf=" check_empty(dataA.Opt)" >
+         <span id="data-title"> Optical Counterpart </span> <br> {{dataA.Opt}} 
+          <span *ngIf="check_empty(dataA.r_Opt)"> [{{dataA.r_Opt}}]</span> 
+          <span *ngIf="check_empty(dataA.SpType)" >[{{dataA.SpType}}]</span>
+        </div >
+        <div>
+         <span id="data-title">Photometry:</span> 
+          <div>
+            <span *ngIf=" check_empty(dataA.Vmag)" >V: <span id="data-val">{{dataA.Vmag}} [{{dataA.r_Vmag}}],</span>  </span> 
+            <span *ngIf=" check_empty(dataA.B_V)"> B-V:  <span id="data-val">{{dataA.B_V}},</span>  </span>
+            <span *ngIf=" check_empty(dataA.U_B)"> U-B:  <span id="data-val"> {{dataA.U_B}} </span></span>
+          </div>
+          <div >
+            <span *ngIf=" check_empty(dataA.E_BV)" >E(B-V): <span id="data-val">{{dataA.E_BV}}</span>   </span>
+          </div>
+  
+        </div>
+      </div>
+      <div class=div-references>
+        <ul>
+          <li *ngFor="let book of dataA.refs;let indexOfelement=index;">
+            <span *ngIf="check_empty(dataA.refs[indexOfelement].bib); else full_desc">
+              [{{indexOfelement+1}}] <a href="https://ui.adsabs.harvard.edu/abs/dataA.refs[indexOfelement].bib/abstract">{{dataA.refs[indexOfelement].Name}}</a>  
+            </span>
+            <ng-template #full_desc>
+              [{{indexOfelement+1}}] {{dataA.refs[indexOfelement].Name}}  : {{dataA.refs[indexOfelement].desc}}
+            </ng-template>
+            
+          </li>
+      </ul>
+      </div>
     </div >
-    <div class="box-tools">
-       <a href="http://simbad.u-strasbg.fr/simbad/sim-coo?protocol=html&NbIdent=1&Radius=1&Radius.unit=arcmin&CooFrame=FK5&CooEpoch=2000&CooEqui=2000&Coord={{dataA.RA}}{{dataA.Dec}}">SIMBAD</a> 
+    <div class="side-links">
+      <div class=div-pictures>
+        <a href="http://skyserver.sdss.org/dr16/en/tools/chart/navi.aspx?opt=G&ra={{dataA.RA}}&dec={{dataA.Dec}}&scale=0.1981"><img class=SDSS src="../../assets/static/SDSS.jpeg" alt=""></a> 
+        <a href="http://ps1images.stsci.edu/cgi-bin/ps1cutouts?pos={{dataA.RA}}{{dataA.Dec}}&filter=color&filetypes=stack&auxiliary=data&size=240&output_size=0&verbose=0&autoscale=99.500000&catlist="><img class=panstars src="../../assets/static/panstars.jpeg" alt=""></a> 
+        <div id="aladin-lite-div" >
+          <a href="http://skyserver.sdss.org/dr16/en/tools/chart/navi.aspx?opt=G&ra={{dataA.RA}}&dec={{dataA.Dec}}&scale=0.1981"><img class=SDSS src="../../assets/static/SDSS.jpeg" alt=""></a> 
+       </div>
+      </div >
+      <div class="box-tools">
+         <a href="http://simbad.u-strasbg.fr/simbad/sim-coo?protocol=html&NbIdent=1&Radius=1&Radius.unit=arcmin&CooFrame=FK5&CooEpoch=2000&CooEqui=2000&Coord={{dataA.RA}}{{dataA.Dec}}">SIMBAD</a> 
+      </div>
+      <div class="box-tools">
+         <a href="http://nxsa.esac.esa.int/nxsa-web/#targetname={{dataA.Name}}">XMM-NEWTON</a> 
+      </div>
+      <div class="box-tools">
+         <a href="http://vizier.u-strasbg.fr/viz-bin/VizieR?-source=&-out.add=_r&-out.add=_RAJ%2C_DEJ&-sort=_r&-to=&-out.max=20&-meta.ucd=2&-meta.foot=1&-c={{dataA.RA}}{{dataA.Dec}}&-c.rs=10">VizieR</a> 
+      </div>
+       
     </div>
-    <div class="box-tools">
-       <a href="http://nxsa.esac.esa.int/nxsa-web/#targetname={{dataA.Name}}">XMM-NEWTON</a> 
-    </div>
-    <div class="box-tools">
-       <a href="http://vizier.u-strasbg.fr/viz-bin/VizieR?-source=&-out.add=_r&-out.add=_RAJ%2C_DEJ&-sort=_r&-to=&-out.max=20&-meta.ucd=2&-meta.foot=1&-c={{dataA.RA}}{{dataA.Dec}}&-c.rs=10">VizieR</a> 
-    </div>
-     
   </div>
+  
 </mat-card>
 
 

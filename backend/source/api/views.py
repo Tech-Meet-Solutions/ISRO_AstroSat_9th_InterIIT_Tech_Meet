@@ -40,8 +40,8 @@ def get_source_info(request, pk):
         data['Type'] = source.Type
         data['RA'] = source.RA
         data['Dec'] = source.Dec
-        #data['GLON'] = source.GLON
-        #data['GLAT'] = source.GLAT
+        data['GLON'] = source.GLON
+        data['GLAT'] = source.GLAT
         data['Opt'] = source.Opt
         data['r_Opt'] = source.r_Opt
         data['Vmag'] = source.Vmag
@@ -53,6 +53,7 @@ def get_source_info(request, pk):
         data['Range'] = source.Range
         data['r_Fx'] = source.r_Fx
         data['Porb'] = source.Porb
+        data['Porb2'] = source.Porb2
         data['Ppulse'] = source.Ppulse
         data['r_Ppulse'] = source.r_Ppulse
         data['Cat'] = source.Cat

@@ -1,10 +1,33 @@
 div{
     box-sizing: border-box;
-    border:1px solid red;
+    
+}
+.mat-card{
+    padding:0px; ;
+}
+.bg-img{
+    background-color:#373636;
+    margin-top: 100px;
+    position: absolute;
+    bottom:0px;
 }
 .div-data{
     width:60%;
     display:inline-block;
+    
+}
+.div-xray, .div-opt, .div-coords, .div-type{
+    padding:5px;
+    padding-left:20px;
+    padding-bottom: 15px;;
+    color: #FF6C6C;
+    font-weight: bold;
+    
+}
+#data-title{
+    font-size: 1.08em;
+    font-weight: 100;
+    color:whitesmoke;
 }
 .side-links{
     width:40%;
@@ -18,18 +41,21 @@ div{
     padding-bottom:10px;
 }
 .div-coords,.div-type{
+    
     width:50%;
     display:inline-block;
-    border: 1px solid palegreen;
+    
 }
 .div-type{
-    float:right;
+    float: right;
 }
 .div-xray, .div-opt{
     width:50%;
     display:inline-block;
 }
-
+#data-val{
+    color: #888CFF;
+}
 .SDSS, .panstars{
     height:130px;
     width:130px;
@@ -52,6 +78,8 @@ div{
     height:500px;
     border-radius: 0px;
     color:whitesmoke;
+    position: relative;
+    
 }
 a{
     color:red;

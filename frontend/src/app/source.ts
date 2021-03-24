@@ -25,6 +25,9 @@ export interface SourceA {
   Fx:string;
   Range:string;
   Porb:string;
+  Porb2:string;
+  GLON:string;
+  GLAT:string;
   Ppulse:string;
   r_Ppulse:string;
   Cat:string;
