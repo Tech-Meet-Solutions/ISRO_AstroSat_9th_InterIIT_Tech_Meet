@@ -80,6 +80,9 @@ with open("data/summaryA.csv") as file1:
             print("UNKNOWN SOURCE")
             
 
+print(hmxb)
+print(lmxb)
+sys.exit(0)
 with open("data/hmxbrefs.csv") as hmxbref_file:
     #use numpy to select only those rows  which have 
     pass

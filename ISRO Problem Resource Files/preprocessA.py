@@ -27,7 +27,7 @@ with open('hmxbrefs.dat') as ref:
 	with open("hmxbrefs.csv", "w") as out_csv:
 		out_writer = csv.writer(out_csv, delimiter=',')
 		for line in ref:
-			row=[line[0:6].strip(), line[6:25].strip(), line[25:55].strip(),line[55].strip()]
+			row=[line[0:6].strip(), line[6:25].strip(), line[25:55].strip(),line[55:].strip()]
 			out_writer.writerow(row)
 
 with open('lmxbrefs.dat') as ref:
