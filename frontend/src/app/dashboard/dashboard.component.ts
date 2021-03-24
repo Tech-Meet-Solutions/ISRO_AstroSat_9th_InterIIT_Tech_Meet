@@ -16,6 +16,9 @@ export class DashboardComponent implements OnInit {
   aladin: any;
   plot: any;
   mollweide_lat_long: boolean;
+  moll_button_title: string;
+  radec: any;
+  latlon: any;
 
   constructor(
     private server: ServerService
@@ -27,6 +30,8 @@ export class DashboardComponent implements OnInit {
       layout: {},
       config: {},
     };
+    this.mollweide_lat_long = true;
+    this.moll_button_title = "Switch to RA/Dec (J2000)";
   }
 
   ngOnInit(): void {
@@ -50,7 +55,6 @@ export class DashboardComponent implements OnInit {
         console.log(error);
       }
     );
-    this.mollweide_lat_long = true;
     this.plot.layout = {
       title: 'Mollweide',
       autosize: true,
@@ -138,7 +142,7 @@ export class DashboardComponent implements OnInit {
   }
 
   mollweide(): void {
-    this.plot.data = [{
+    this.radec = [{
       lon: this.lmxb.map(function (value, index) { return -value.RA; }),
       lat: this.lmxb.map(function (value, index) { return value.Dec; }),
       text: this.lmxb.map(function (value, index) { return `(${value.RA}, ${value.Dec})` }),
@@ -183,6 +187,54 @@ export class DashboardComponent implements OnInit {
         color: 'black'
       }
     }];
+    this.latlon = [{
+      lon: this.lmxb.map(function (value, index) { return -value.GLON; }),
+      lat: this.lmxb.map(function (value, index) { return value.GLAT; }),
+      text: this.lmxb.map(function (value, index) { return `(${value.GLON}, ${value.GLAT})` }),
+      hoverinfo: 'text',
+      hoverlabel: { bgcolor: '#41454c' },
+      marker: {
+        color: '#5d5',
+        opacity: 0.5,
+        size: 7,
+        line: {
+          color: 'rgb(231, 99, 250)',
+          width: 1
+        }
+      },
+      type: 'scattergeo'
+    },
+    {
+      lon: this.hmxb.map(function (value, index) { return -value.GLON; }),
+      lat: this.hmxb.map(function (value, index) { return value.GLAT; }),
+      text: this.hmxb.map(function (value, index) { return `(${value.GLON}, ${value.GLAT})` }),
+      hoverinfo: 'text',
+      hoverlabel: { bgcolor: '#41454c' },
+      marker: {
+        color: '#f00',
+        opacity: 0.5,
+        size: 7,
+        line: {
+          color: 'rgb(231, 99, 250)',
+          width: 1
+        }
+      },
+      type: 'scattergeo'
+    },
+    {
+      type: 'scattergeo',
+      hoverinfo: false,
+      lat: [90, -90],
+      lon: [-360, -360],
+      mode: 'lines',
+      line: {
+        width: 0.5,
+        color: 'black'
+      }
+    }];
+    this.plot.data = this.latlon;
+    this.mollweide_lat_long = true;
+    this.moll_button_title = "Switch to RA/Dec (J2000)";
   }
 
   click_plot(event): void {
@@ -191,5 +243,24 @@ export class DashboardComponent implements OnInit {
     console.log(event.points[0].lat);
     console.log(-event.points[0].lon);
     this.aladin.gotoRaDec(-event.points[0].lon, event.points[0].lat);
+  }
+
+  moll_switch(): void {
+    if (this.mollweide_lat_long) {
+      this.plot.data = this.radec;
+      this.mollweide_lat_long = false;
+      this.moll_button_title = "Switch to Galactic Coords";
+    } else {
+      this.plot.data = this.latlon;
+      this.mollweide_lat_long = true;
+      this.moll_button_title = "Switch to RA/Dec (J2000)";
+    }
+  }
+
+  update_survey(survey, is_color = true): void {
+    console.log(is_color);
+    this.aladin.setBaseImageLayer(survey);
+    if (!is_color)
+      this.aladin.getBaseImageLayer().getColorMap().update('grayscale');
   }
 }
