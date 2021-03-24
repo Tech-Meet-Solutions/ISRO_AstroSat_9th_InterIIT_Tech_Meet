@@ -57,12 +57,6 @@ export class DashboardComponent implements OnInit {
       hovermode: 'closest',
       dragmode: false,
       showlegend: false,
-      // margin: {
-      //   l: 20,
-      //   b: 0,
-      //   r: 20,
-      //   t: 0
-      // },
       geo: {
         projection: {
           type: 'mollweide',

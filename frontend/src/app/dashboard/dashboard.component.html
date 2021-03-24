@@ -1,13 +1,11 @@
 <mat-grid-list cols="14">
   <mat-grid-tile colspan="2">
-    <mat-grid-tile-header>Legend</mat-grid-tile-header>
+    <button></button>
   </mat-grid-tile>
-  <mat-grid-tile colspan="7" style="height: 80vh;">
-    <mat-grid-tile-header>Tile 3</mat-grid-tile-header>
-    <div id="aladin-lite-div" style="width:100%; height:80%;"></div>
+  <mat-grid-tile colspan="7" style="height: 70vh;">
+    <div id="aladin-lite-div" style="width:100%; height:100%;"></div>
   </mat-grid-tile>
   <mat-grid-tile colspan="5" style="height: 80vh;">
-    <mat-grid-tile-header>Mollweide</mat-grid-tile-header>
-    <plotly-plot [data]="plot.data" [layout]="plot.layout" [config]="plot.config" (plotlyClick)=click_plot($event)></plotly-plot>
+    <plotly-plot style="width: 100%; height: 100%;" [data]="plot.data" [layout]="plot.layout" [config]="plot.config" (plotlyClick)=click_plot($event)></plotly-plot>
   </mat-grid-tile>
 </mat-grid-list>
