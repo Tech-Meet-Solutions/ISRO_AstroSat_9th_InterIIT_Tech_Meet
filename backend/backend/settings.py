@@ -25,7 +25,7 @@ SECRET_KEY = '-=w467=pbo6y21**6o1=th_-rf32x_g)l^i*oi6ar1cs=rjpni'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'astronetra.herokuapp.com']
 
 
 # Application definition
@@ -55,10 +55,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ORIGIN_WHITELIST = [
-    'http://localhost:4200',
-    'http://localhost:3000',
-]
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'backend.urls'
 
