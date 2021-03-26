@@ -4,7 +4,6 @@ __pycache__/
 *$py.class
 
 # Database
-db.sqlite3
 media/
 
 # compiled output
