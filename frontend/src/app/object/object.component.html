@@ -66,7 +66,7 @@
             <li *ngFor="let book of dataA.refs;let indexOfelement=index;">
               <span *ngIf="check_empty(dataA.refs[indexOfelement].bib); else full_desc">
                 [{{indexOfelement+1}}] <a
-                  href="https://ui.adsabs.harvard.edu/abs/dataA.refs[indexOfelement].bib/abstract">{{dataA.refs[indexOfelement].Name}}</a>
+                  href="https://ui.adsabs.harvard.edu/abs/{{dataA.refs[indexOfelement].bib}}/abstract">{{dataA.refs[indexOfelement].Name}}</a>
               </span>
               <ng-template #full_desc>
                 [{{indexOfelement+1}}] {{dataA.refs[indexOfelement].Name}} : {{dataA.refs[indexOfelement].desc}}
@@ -79,12 +79,16 @@
       <div class="side-links">
         <div class=div-pictures>
           <a
-            href="http://skyserver.sdss.org/dr16/en/tools/chart/navi.aspx?opt=G&ra={{dataA.RA}}&dec={{dataA.Dec}}&scale=0.1981"><img
-              class=SDSS src="../../assets/static/SDSS.jpeg"  alt="alternative text" title="Link to SDSS Navigate Tool"></a>
-              
+            href="http://skyserver.sdss.org/dr16/en/tools/chart/navi.aspx?opt=G&ra={{dataA.RA}}&dec={{dataA.Dec}}&scale=0.1981">
+            <img class=SDSS src="assets/static/SDSS.jpeg" alt="alternative text" title="Link to SDSS Navigate Tool"
+              routerLink="/menu" />
+          </a>
+
           <a
-            href="http://ps1images.stsci.edu/cgi-bin/ps1cutouts?pos={{dataA.RA}}{{dataA.Dec}}&filter=color&filetypes=stack&auxiliary=data&size=240&output_size=0&verbose=0&autoscale=99.500000&catlist="><img
-              class=panstars src="../../assets/static/panstars.jpeg" alt="alternative text" title="Link to PanSTARRS-1"></a>
+            href="http://ps1images.stsci.edu/cgi-bin/ps1cutouts?pos={{dataA.RA}}{{dataA.Dec}}&filter=color&filetypes=stack&auxiliary=data&size=240&output_size=0&verbose=0&autoscale=99.500000&catlist=">
+            <img class=panstars src="assets/static/panstars.jpeg" alt="alternative text" title="Link to PanSTARRS-1"
+              routerLink="/menu" />
+          </a>
           <!--<div id="aladin-lite-div">
             <a
               href="http://skyserver.sdss.org/dr16/en/tools/chart/navi.aspx?opt=G&ra={{dataA.RA}}&dec={{dataA.Dec}}&scale=0.1981"><img
@@ -219,62 +223,62 @@
       </ng-container>
       <!--Object-->
       <ng-container matColumnDef="Object">
-        <th mat-header-cell  id=head-cell *matHeaderCellDef> Object </th>
+        <th mat-header-cell id=head-cell *matHeaderCellDef> Object </th>
         <td mat-cell id=name *matCellDef="let element"> {{element.Object}} </td>
       </ng-container>
 
       <!--obsid-->
       <ng-container matColumnDef="obsid">
-        <th mat-header-cell  id=head-cell *matHeaderCellDef> Obsid </th>
+        <th mat-header-cell id=head-cell *matHeaderCellDef> Obsid </th>
         <td mat-cell id=name *matCellDef="let element"> {{element.obsid.substring(0,11)}} <br>
           {{element.obsid.substring(11)}} </td>
       </ng-container>
 
       <!--RA-->
       <ng-container matColumnDef="RA">
-        <th mat-header-cell  id=head-cell *matHeaderCellDef> RA </th>
+        <th mat-header-cell id=head-cell *matHeaderCellDef> RA </th>
         <td mat-cell id=name *matCellDef="let element"> {{element.RA}} </td>
       </ng-container>
 
       <!--Dec-->
       <ng-container matColumnDef="Dec">
-        <th mat-header-cell  id=head-cell *matHeaderCellDef> DEC </th>
+        <th mat-header-cell id=head-cell *matHeaderCellDef> DEC </th>
         <td mat-cell id=name *matCellDef="let element"> {{element.Dec}} </td>
       </ng-container>
 
       <!--instrument-->
       <ng-container matColumnDef="instrument">
-        <th mat-header-cell  id=head-cell *matHeaderCellDef> Observed<br> Instrument </th>
+        <th mat-header-cell id=head-cell *matHeaderCellDef> Observed<br> Instrument </th>
         <td mat-cell id=name *matCellDef="let element"> {{element.instrument}} </td>
       </ng-container>
 
       <!--date_time-->
       <ng-container matColumnDef="date_time">
-        <th mat-header-cell  id=head-cell *matHeaderCellDef> Date / Time</th>
+        <th mat-header-cell id=head-cell *matHeaderCellDef> Date / Time</th>
         <td mat-cell id=name *matCellDef="let element"> {{element.date_time}} </td>
       </ng-container>
 
       <!--proposal_id-->
       <ng-container matColumnDef="proposal_id">
-        <th mat-header-cell  id=head-cell *matHeaderCellDef> Proposal ID </th>
+        <th mat-header-cell id=head-cell *matHeaderCellDef> Proposal ID </th>
         <td mat-cell id=name *matCellDef="let element"> {{element.proposal_id}} </td>
       </ng-container>
 
       <!--target_id-->
       <ng-container matColumnDef="target_id">
-        <th mat-header-cell  id=head-cell *matHeaderCellDef> Target ID </th>
+        <th mat-header-cell id=head-cell *matHeaderCellDef> Target ID </th>
         <td mat-cell id=name *matCellDef="let element"> {{element.target_id}} </td>
       </ng-container>
 
       <!--observer-->
       <ng-container matColumnDef="observer">
-        <th mat-header-cell  id=head-cell *matHeaderCellDef> Observer </th>
+        <th mat-header-cell id=head-cell *matHeaderCellDef> Observer </th>
         <td mat-cell id=name *matCellDef="let element"> {{element.abstract}} </td>
       </ng-container>
 
       <!--abstract-->
       <ng-container matColumnDef="abstract">
-        <th mat-header-cell  id=head-cell *matHeaderCellDef> Abstract </th>
+        <th mat-header-cell id=head-cell *matHeaderCellDef> Abstract </th>
         <td mat-cell id=name *matCellDef="let element">
           {{element.observer.substring(0,300)}}
           <span id="points{{element.id}}">...</span>
@@ -287,7 +291,7 @@
 
       <!--visibility-->
       <ng-container matColumnDef="visibilility">
-        <th mat-header-cell  id=head-cell *matHeaderCellDef> Visibility </th>
+        <th mat-header-cell id=head-cell *matHeaderCellDef> Visibility </th>
         <td mat-cell id=name *matCellDef="let element">
           <span *ngIf="check(element.id),'uvit'">UVIT</span><br>
           <span *ngIf="check(element.id),'sxt'">SXT</span><br>

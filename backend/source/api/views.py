@@ -1,22 +1,18 @@
 from rest_framework import status
-from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from django.core import serializers
-from django.http.response import JsonResponse
+from rest_framework.response import Response
 
-from source.models import SourceA, SourceB, Refs
-from source.api.serializers import SourceASerializer, SourceBSerializer, PublicationSerializer
-from rest_framework.renderers import JSONRenderer
+from source.models import SourceA, Refs
+from source.api.serializers import SourceASerializer
+
 
 # Get Source Info
-
-
 @api_view(['GET', ])
 def get_source_list(request):
     # id,name,ra,dec
     if request.method == 'GET':
         data = {}
-        #all_entries =SourceA.objects.all()
+        all_entries = SourceA.objects.all()
         fields = ('id', 'Name', 'Type', 'RA', 'Dec', 'GLON', 'GLAT', 'Class',
                   'isObserved_uvit', 'isObserved_sxt', 'isObserved_laxpc', 'isObserved_czti')
         all_entries = SourceA.objects.all().only('id', 'Name', 'Type', 'RA', 'Dec', 'GLON', 'GLAT', 'Class',
@@ -24,7 +20,7 @@ def get_source_list(request):
 
         data["sources"] = SourceASerializer(all_entries, many=True, fields=fields).data
 
-        #data["SourcesA"] = JSONRenderer().render(serializer.data)
+        # data["SourcesA"] = JSONRenderer().render(serializer.data)
 
         return Response(data, status=status.HTTP_200_OK)
 ###################################################################
@@ -91,12 +87,10 @@ def get_source_info(request, pk):
                 })
             except Refs.DoesNotExist:
                 pass
-            
-           
 
         data["refs"] = refs_list
 
-        #data['CatalogA_data'] = data
+        data['CatalogA_data'] = data
         czti = []
         if source.isObserved_czti:
             for i in source.czti.all():
