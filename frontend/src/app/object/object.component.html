@@ -66,7 +66,7 @@
             <li *ngFor="let book of dataA.refs;let indexOfelement=index;">
               <span *ngIf="check_empty(dataA.refs[indexOfelement].bib); else full_desc">
                 [{{indexOfelement+1}}] <a
-                  href="https://ui.adsabs.harvard.edu/abs/dataA.refs[indexOfelement].bib/abstract">{{dataA.refs[indexOfelement].Name}}</a>
+                  href="https://ui.adsabs.harvard.edu/abs/{{dataA.refs[indexOfelement].bib}}/abstract">{{dataA.refs[indexOfelement].Name}}</a>
               </span>
               <ng-template #full_desc>
                 [{{indexOfelement+1}}] {{dataA.refs[indexOfelement].Name}} : {{dataA.refs[indexOfelement].desc}}
