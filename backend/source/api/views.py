@@ -90,7 +90,7 @@ def get_source_info(request, pk):
 
         data["refs"] = refs_list
 
-        data['CatalogA_data'] = data
+        # data['CatalogA_data'] = data
         czti = []
         if source.isObserved_czti:
             for i in source.czti.all():
@@ -106,8 +106,6 @@ def get_source_info(request, pk):
                     "target_id": i.target_id,
                     "observer": i.observer,
                     "abstract": i.abstract
-
-
                 })
 
         data["czti"] = czti
@@ -147,7 +145,6 @@ def get_source_info(request, pk):
                     "observer": i.observer,
                     "abstract": i.abstract
                 })
-
         data["laxpc"] = laxpc
 
         uvit = []
@@ -166,7 +163,6 @@ def get_source_info(request, pk):
                     "observer": i.observer,
                     "abstract": i.abstract
                 })
-
         data["uvit"] = uvit
 
         # loop over the publications for this source
